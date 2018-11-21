@@ -25,11 +25,13 @@ jobs:
       - checkout
       - run:
           name: Setup environment
-          command: docker-compose up -d
+          command: docker-compose up -d database
+      - run:
+          name: Database Startup Graceperiod
+          command: sleep 5
       - run:
           name: Test Database Migrations
-          working_directory: projects/db
-          command: ./run-migration.sh
+          command: docker-compose run migration
 
 workflows:
   version: 2
