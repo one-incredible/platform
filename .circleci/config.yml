@@ -19,7 +19,6 @@ jobs:
       - image: circleci/python:3.6
     environment:
       COMPOSE_FILE: ./.circleci/docker-compose.yml
-      DATABASE_URI: jdbc:postgresql://localhost:5432/platform
     steps:
       - setup_remote_docker
       - checkout
