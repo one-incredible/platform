@@ -1,0 +1,12 @@
+{
+  "name": "backend-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^7.6.1"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
