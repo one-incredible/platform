@@ -8,7 +8,7 @@ jobs:
       - run:
           name: Install Client Web
           working_directory: projects/client-web
-          command: yarn run install
+          command: yarn install
       - run:
           name: Test Client Web
           working_directory: projects/client-web
