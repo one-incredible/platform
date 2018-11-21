@@ -38,3 +38,4 @@ workflows:
   test-flow:
     jobs:
       - test-client-web
+      - test-db-migration
