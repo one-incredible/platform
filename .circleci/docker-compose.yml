@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  database:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_DB: platform
+      POSTGRES_USER: migration
+      POSTGRES_PASSWORD: migration
+
+  migration:
+    image: boxfuse/flyway
+    depends_on:
+     - database
+    volumes:
+      - ../projects/migrations/sql:/flyway/sql
+    command:
+      - -url=jdbc:postgresql://database:5432/platform
+      - -user=migration
+      - -password=migration
+      - migrate

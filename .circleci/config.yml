@@ -14,9 +14,27 @@ jobs:
           working_directory: projects/client-web
           command: yarn run lint
 
+  test-db-migration:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      COMPOSE_FILE: ./.circleci/docker-compose.yml
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Setup environment
+          command: docker-compose up -d database
+      - run:
+          name: Database Startup Graceperiod
+          command: sleep 5
+      - run:
+          name: Test Database Migrations
+          command: docker-compose run migration
 
 workflows:
   version: 2
   test-flow:
     jobs:
       - test-client-web
+      - test-db-migration
