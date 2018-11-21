@@ -13,6 +13,3 @@ CREATE TABLE video_revision (
 
 ALTER TABLE video
     ADD FOREIGN KEY (id, revision) REFERENCES video_revision (parent, revision);
-
-ALTER TABLE video_revision
-    ADD FOREIGN KEY (parent) REFERENCES video (id);
