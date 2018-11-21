@@ -24,7 +24,7 @@ jobs:
           POSTGRES_USER: migrate
           POSTGRES_PASSWORD: migrate
     environment:
-      DATABASE_URI: jdbc:postgresql://[::1]:5432/platform
+      DATABASE_URI: jdbc:postgresql://localhost:5432/platform
     steps:
       - setup_remote_docker
       - checkout
