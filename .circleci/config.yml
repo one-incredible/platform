@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  auto-format:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: ./.circleci/scripts/setup.sh
+
+  test-client-web:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Install Client Web
+          working_directory: projects/client-web
+          command: yarn run install
+      - run:
+          name: Test Client Web
+          working_directory: projects/client-web
+          command: yarn run test
+
+
+workflows:
+  version: 2
+  test-flow:
+    jobs:
+      - test-client-web
