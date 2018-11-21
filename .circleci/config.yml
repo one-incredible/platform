@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  test-client-web:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Install Client Web
+          working_directory: projects/client-web
+          command: yarn run install
+      - run:
+          name: Test Client Web
+          working_directory: projects/client-web
+          command: yarn run lint
+
+
+workflows:
+  version: 2
+  test-flow:
+    jobs:
+      - test-client-web
