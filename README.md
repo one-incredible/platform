@@ -9,8 +9,7 @@ Install Yarn
 sudo npm install yarn -g
 ```
 
-Installation Instructions
--------------------------
+## Installation Instructions
 
 Clone this repository.
 ```
@@ -20,5 +19,5 @@ git clone https://github.com/oneincredible/platform.git
 Execute docker compose
 ```
 cd platform
-docker-compose -f docker-compose.yml up
+docker-compose docker-compose.yml up
 ```
