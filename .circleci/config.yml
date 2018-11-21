@@ -21,6 +21,9 @@ jobs:
       - setup_remote_docker
       - checkout
       - run:
+          name: Rebuild Docker Containers
+          command: docker-compose build
+      - run:
           name: Setup environment
           command: docker-compose up -d database
       - run:
