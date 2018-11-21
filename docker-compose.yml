@@ -9,13 +9,13 @@ services:
       POSTGRES_PASSWORD: migration
 
   migration:
-    image: boxfuse/flyway
+    image: migration
+    build:
+      context: projects/db
     depends_on:
      - database
-    volumes:
-      - ../projects/db/migrations/sql:/flyway/sql
     command:
-      - -url=jdbc:postgresql://database:5432/platform
+      - -url=jdbc:postgresql://database/platform
       - -user=migration
       - -password=migration
       - migrate
