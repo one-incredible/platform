@@ -13,7 +13,7 @@ services:
     depends_on:
      - database
     volumes:
-      - ../projects/migrations/sql:/flyway/sql
+      - ../projects/db/migrations/sql:/flyway/sql
     command:
       - -url=jdbc:postgresql://database:5432/platform
       - -user=migration
