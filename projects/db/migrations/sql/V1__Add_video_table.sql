@@ -1,9 +1,18 @@
 CREATE TABLE video (
     id uuid NOT NULL,
-    revision_id integer
+    revision integer,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE video_revision (
-    id SERIAL,
-    name text
+    parent uuid,
+    revision integer,
+    name text,
+    PRIMARY KEY (parent, revision)
 );
+
+ALTER TABLE video
+    ADD FOREIGN KEY (id, revision) REFERENCES video_revision (parent, revision);
+
+ALTER TABLE video_revision
+    ADD FOREIGN KEY (parent) REFERENCES video (id);
