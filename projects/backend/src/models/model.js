@@ -1,3 +1,3 @@
 export const Model = {
-    id: null,
+  id: null,
 };

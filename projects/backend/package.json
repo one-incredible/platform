@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint '*/**/*.js'",
     "test": "jest --verbose"
   },
   "dependencies": {
@@ -13,11 +14,42 @@
   "devDependencies": {
     "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
-    "jest": "^23.6.0"
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "jest": "^23.6.0",
+    "prettier": "^1.15.2"
   },
   "babel": {
     "presets": [
       "env"
     ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
+    "extends": [
+      "plugin:prettier/recommended",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "trailingComma": "es5"
+        }
+      ]
+    }
   }
 }

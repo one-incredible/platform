@@ -1,5 +1,9 @@
-import {Model} from '../model';
+import { Model } from '../model';
 
-export const Video = Object.assign({}, {
+export const Video = Object.assign(
+  {},
+  {
     name: null,
-}, Model);
+  },
+  Model
+);
