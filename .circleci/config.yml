@@ -1,12 +1,5 @@
 version: 2
 jobs:
-  auto-format:
-    docker:
-      - image: circleci/node:8
-    steps:
-      - checkout
-      - run: ./.circleci/scripts/setup.sh
-
   test-client-web:
     docker:
       - image: circleci/node:8
@@ -19,7 +12,7 @@ jobs:
       - run:
           name: Test Client Web
           working_directory: projects/client-web
-          command: yarn run test
+          command: yarn run lint
 
 
 workflows:
