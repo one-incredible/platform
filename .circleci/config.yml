@@ -17,11 +17,12 @@ jobs:
   test-db-migration:
     docker:
       - image: circleci/python:3.6
-    environment:
-      COMPOSE_FILE: ./.circleci/docker-compose.yml
     steps:
       - setup_remote_docker
       - checkout
+      - run:
+          name: Rebuild Docker Containers
+          command: docker-compose build
       - run:
           name: Setup environment
           command: docker-compose up -d database
