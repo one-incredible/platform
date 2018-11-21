@@ -3,10 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --verbose"
+  },
   "dependencies": {
-    "pg": "^7.6.1"
+    "pg": "^7.6.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
     "jest": "^23.6.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }
