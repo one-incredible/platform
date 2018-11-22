@@ -30,6 +30,10 @@ export function field(name, encode = noop, decode = noop) {
   };
 }
 
+export function modelField(name, Model) {
+  return field(name, Model.encode, Model.decode);
+}
+
 export function createModel(fields) {
   const encode = createSerializer(fields);
   const decode = createDeserializer(fields);
