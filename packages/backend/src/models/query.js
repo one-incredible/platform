@@ -24,3 +24,29 @@ export function createFetchRevision(Model, name) {
     };
   };
 }
+
+export function createStoreRevision(Model, name) {
+  const revisionTable = `${name}_revision`;
+
+  const columns = Model.fields.map(field => field.name);
+  const placeholders = Model.fields.map((field, index) => '$' + (index + 1));
+
+  const text = [
+    `INSERT INTO ${revisionTable}`,
+    '(' + [...columns, 'revision'].join(', ') + ')',
+    'SELECT',
+    [...placeholders, 'COALESCE(MAX(revision) + 1, 1)'].join(', '),
+    'FROM',
+    revisionTable,
+    'WHERE',
+    'id = $1',
+    'RETURNING revision',
+  ].join(' ');
+
+  return function createQuery(model) {
+    return {
+      text,
+      values: Model.fields.map(field => model[field.name]),
+    };
+  };
+}

@@ -1,5 +1,5 @@
 import { Storage } from '../storage';
-import { createFetchRevision } from '../query';
+import { createFetchRevision, createStoreRevision } from '../query';
 import { Video } from './model';
 
 const Query = {
@@ -22,32 +22,7 @@ VALUES
     };
   },
 
-  storeRevision(video) {
-    return {
-      text: `
-INSERT INTO video_revision
-(
-    id,
-    name,
-    revision
-)
-SELECT
-    $1,
-    $2,
-    COALESCE(
-        MAX(revision) + 1,
-        1
-    )
-FROM
-    video_revision
-WHERE
-    id = $3
-RETURNING
-    revision
-`,
-      values: [video.id, video.name, video.id],
-    };
-  },
+  storeRevision: createStoreRevision(Video, 'video'),
 };
 
 export class VideoStorage extends Storage {
