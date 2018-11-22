@@ -57,12 +57,20 @@ describe('Query modules', () => {
         rate: 12,
       });
 
+      let query;
       const createQuery = createPromoteRevision('video');
-      const query = createQuery(model, 3);
+
+      query = createQuery(model, 1);
       expect(query.text).toEqual(
         'INSERT INTO video (id, revision) VALUES($1, $2)'
       );
-      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 3]);
+      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 1]);
+
+      query = createQuery(model, 2);
+      expect(query.text).toEqual(
+        'UPDATE video SET revision = $2 WHERE id = $1'
+      );
+      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 2]);
     });
   });
 

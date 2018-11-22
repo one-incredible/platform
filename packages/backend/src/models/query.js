@@ -44,11 +44,12 @@ export function createStoreRevision(Model, name) {
 }
 
 export function createPromoteRevision(name) {
-  const text = `INSERT INTO ${name} (id, revision) VALUES($1, $2)`;
+  const insert = `INSERT INTO ${name} (id, revision) VALUES($1, $2)`;
+  const update = `UPDATE ${name} SET revision = $2 WHERE id = $1`;
 
   return function createQuery(model, revisionNo) {
     return {
-      text,
+      text: revisionNo === 1 ? insert : update,
       values: [model.id, revisionNo],
     };
   };
