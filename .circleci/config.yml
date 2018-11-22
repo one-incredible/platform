@@ -58,6 +58,10 @@ jobs:
       - run:
           name: Test Backend
           working_directory: projects/backend
+          environment:
+            PGDATABASE: platform
+            PGUSER: platform
+            PGPASSWORD: mock123
           command: yarn test --runInBand
 
 workflows:
