@@ -5,11 +5,11 @@ CREATE TABLE video (
 );
 
 CREATE TABLE video_revision (
-    parent uuid,
+    id uuid,
     revision integer,
     name text,
-    PRIMARY KEY (parent, revision)
+    PRIMARY KEY (id, revision)
 );
 
 ALTER TABLE video
-    ADD FOREIGN KEY (id, revision) REFERENCES video_revision (parent, revision);
+    ADD FOREIGN KEY (id, revision) REFERENCES video_revision (id, revision);
