@@ -1,4 +1,3 @@
-export const Video = {
-  id: null,
-  name: null,
-};
+import { createModel, field } from '../model';
+
+export const Video = createModel([field('id'), field('name')]);

@@ -1,11 +1,24 @@
 import { Video } from '../model';
 
 describe('Video Model', () => {
-  it('has an id', () => {
-    expect(Video.id).toBe(null);
+  describe('#decode', () => {
+    it('works', () => {
+      const model = Video.decode(
+        JSON.parse('{"id":"any-string","name":"A name"}')
+      );
+      expect(model.id).toEqual('any-string');
+    });
   });
 
-  it('has a name', () => {
-    expect(Video.name).toBe(null);
+  describe('#encode', () => {
+    it('works', () => {
+      const payload = Video.encode({
+        id: 'any-string',
+        name: 'A name',
+      });
+      expect(JSON.stringify(payload)).toEqual(
+        '{"id":"any-string","name":"A name"}'
+      );
+    });
   });
 });
