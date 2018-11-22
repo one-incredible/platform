@@ -54,11 +54,6 @@ jobs:
       - run:
           name: Test Backend
           working_directory: projects/backend
-          environment:
-            PGHOST: database
-            PGDATABASE: platform
-            PGUSER: platform
-            PGPASSWORD: mock123
           command: docker-compose run --entrypoint '' backend yarn test
 
 workflows:
