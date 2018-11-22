@@ -33,6 +33,33 @@ jobs:
           name: Test Database Migrations
           command: docker-compose run migration
 
+  test-backend:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Rebuild Docker Containers
+          command: docker-compose build
+      - run:
+          name: Setup environment
+          command: docker-compose up -d database
+      - run:
+          name: Database Startup Graceperiod
+          command: sleep 5
+      - run:
+          name: Run Database Migrations
+          command: docker-compose run migration
+      - run:
+          name: Install Backend
+          working_directory: projects/backend
+          command: yarn install
+      - run:
+          name: Test Backend
+          working_directory: projects/backend
+          command: yarn test --runInBand
+
 workflows:
   version: 2
   test-flow:
