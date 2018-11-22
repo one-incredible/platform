@@ -1,6 +1,5 @@
 import {
   createPromoteRevision,
-  createRevokeRevision,
   createFetchRevision,
   createStoreRevision,
 } from './query';
@@ -9,7 +8,6 @@ export function createRevisionedStorageAdapter(Model, tableName) {
   const Query = {
     fetchRevision: createFetchRevision(Model, tableName),
     storeRevision: createStoreRevision(Model, tableName),
-    revokeRevision: createRevokeRevision(tableName),
     promoteRevision: createPromoteRevision(tableName),
   };
 
