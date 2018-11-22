@@ -41,6 +41,7 @@ describe('Video Storage', () => {
         fixtureVideo = Video.decode({
           id: uuidv4(),
           name: 'My Video',
+          streams: [],
         });
         await storage.store(fixtureVideo);
       });
@@ -59,6 +60,7 @@ describe('Video Storage', () => {
       video = Video.decode({
         id: uuidv4(),
         name: 'My Video',
+        streams: [],
       });
       await storage.store(video);
     });
