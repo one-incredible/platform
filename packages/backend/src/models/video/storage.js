@@ -7,33 +7,35 @@ import {
 } from '../query';
 import { Video } from './model';
 
-const Query = {
-  fetchRevision: createFetchRevision(Video, 'video'),
-  storeRevision: createStoreRevision(Video, 'video'),
-  revokeRevision: createRevokeRevision('video'),
-  promoteRevision: createPromoteRevision('video'),
-};
+function createRevisionedStorageAdapter(Model, tableName) {
+  const Query = {
+    fetchRevision: createFetchRevision(Model, tableName),
+    storeRevision: createStoreRevision(Model, tableName),
+    revokeRevision: createRevokeRevision(tableName),
+    promoteRevision: createPromoteRevision(tableName),
+  };
 
-export class VideoStorage extends Storage {
-  async fetch(videoId) {
-    const result = await this.db.query(Query.fetchRevision(videoId));
+  class StorageAdapter extends Storage {}
+
+  StorageAdapter.prototype.fetch = async function fetch(modelId) {
+    const result = await this.db.query(Query.fetchRevision(modelId));
     if (result.rowCount === 0) {
       return null;
     }
 
-    return Video.decode(result.rows[0]);
-  }
+    return Model.decode(result.rows[0]);
+  };
 
-  async store(video) {
+  StorageAdapter.prototype.store = async function store(model) {
     try {
       await this.db.query('BEGIN');
-      await this.db.query(Query.revokeRevision(video));
+      await this.db.query(Query.revokeRevision(model));
 
-      const result = await this.db.query(Query.storeRevision(video));
+      const result = await this.db.query(Query.storeRevision(model));
 
       const { revision } = result.rows[0];
 
-      await this.db.query(Query.promoteRevision(video, revision));
+      await this.db.query(Query.promoteRevision(model, revision));
 
       await this.db.query('COMMIT');
     } catch (e) {
@@ -41,4 +43,8 @@ export class VideoStorage extends Storage {
       throw e;
     }
   }
+
+  return StorageAdapter;
 }
+
+export const VideoStorage = createRevisionedStorageAdapter(Video, 'video');
