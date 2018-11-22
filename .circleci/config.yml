@@ -52,17 +52,14 @@ jobs:
           name: Run Database Migrations
           command: docker-compose run migration
       - run:
-          name: Install Backend
-          working_directory: projects/backend
-          command: yarn install
-      - run:
           name: Test Backend
           working_directory: projects/backend
           environment:
+            PGHOST: database
             PGDATABASE: platform
             PGUSER: platform
             PGPASSWORD: mock123
-          command: yarn test --runInBand
+          command: docker-compose run --entrypoint '' backend yarn test
 
 workflows:
   version: 2
