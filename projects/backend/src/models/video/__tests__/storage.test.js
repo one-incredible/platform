@@ -55,7 +55,6 @@ describe('Video Storage', () => {
         expect(res.rows[0].revision).toEqual(1);
         expect(res.rows[1].name).toEqual('My Video with new name');
         expect(res.rows[1].revision).toEqual(2);
-        expect(res.rows[1].name).toEqual('My Video with new name');
       });
     });
   });
