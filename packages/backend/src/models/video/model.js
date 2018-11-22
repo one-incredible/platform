@@ -1,9 +1,4 @@
-import { Model } from '../model';
-
-export const Video = Object.assign(
-  {},
-  {
-    name: null,
-  },
-  Model
-);
+export const Video = {
+  id: null,
+  name: null,
+};
