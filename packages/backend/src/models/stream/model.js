@@ -1,7 +1,9 @@
-import { createModel, field } from '../model';
+import { createModel, field, modelField } from '../model';
+import { File } from '../file/model';
+import { Resolution } from '../resolution/model';
 
 export const Stream = createModel([
   field('id'),
-  field('resolution_id'),
-  field('file_id'),
+  modelField('resolution', Resolution),
+  modelField('file', File),
 ]);
