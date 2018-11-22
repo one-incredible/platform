@@ -1,26 +1,9 @@
 import { Storage } from '../storage';
+import { createFetchRevision } from '../query';
 import { Video } from './model';
 
 const Query = {
-  fetchRevision(videoId) {
-    return {
-      text: `
-SELECT
-  r.parent AS id,
-  r.name
-FROM
-  video_revision r
-JOIN
-  video v
-  ON
-    v.id = r.parent AND
-    v.revision = r.revision
-WHERE
-  v.id = $1
-`,
-      values: [videoId],
-    };
-  },
+  fetchRevision: createFetchRevision(Video, 'video'),
 
   updateRevision(video, revisionNo) {
     return {
@@ -44,7 +27,7 @@ VALUES
       text: `
 INSERT INTO video_revision
 (
-    parent,
+    id,
     name,
     revision
 )
@@ -58,7 +41,7 @@ SELECT
 FROM
     video_revision
 WHERE
-    parent = $3
+    id = $3
 RETURNING
     revision
 `,

@@ -64,10 +64,9 @@ describe('Video Storage', () => {
     });
 
     it('inserts row in DB with revision 1', async () => {
-      const res = await db.query(
-        'SELECT * FROM video_revision WHERE parent = $1',
-        [video.id]
-      );
+      const res = await db.query('SELECT * FROM video_revision WHERE id = $1', [
+        video.id,
+      ]);
       expect(res.rowCount).toEqual(1);
       const row = res.rows[0];
       expect(row.revision).toEqual(1);
@@ -82,7 +81,7 @@ describe('Video Storage', () => {
 
       it('adds a revision', async () => {
         const res = await db.query(
-          'SELECT * FROM video_revision WHERE parent = $1 ORDER BY revision ASC',
+          'SELECT * FROM video_revision WHERE id = $1 ORDER BY revision ASC',
           [video.id]
         );
         expect(res.rowCount).toEqual(2);
