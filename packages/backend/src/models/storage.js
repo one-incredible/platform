@@ -27,7 +27,6 @@ export function createRevisionedStorageAdapter(Model, tableName) {
   StorageAdapter.prototype.store = async function store(model) {
     try {
       await this.db.query('BEGIN');
-      await this.db.query(Query.revokeRevision(model));
 
       const result = await this.db.query(Query.storeRevision(model));
 
