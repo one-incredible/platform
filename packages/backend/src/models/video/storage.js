@@ -1,6 +1,27 @@
 import { Storage } from '../storage';
+import { Video } from './model';
 
 const Query = {
+  fetchRevision(videoId) {
+    return {
+      text: `
+SELECT
+  r.parent AS id,
+  r.name
+FROM
+  video_revision r
+JOIN
+  video v
+  ON
+    v.id = r.parent AND
+    v.revision = r.revision
+WHERE
+  v.id = $1
+`,
+      values: [videoId],
+    };
+  },
+
   updateRevision(video, revisionNo) {
     return {
       text: `
@@ -47,6 +68,15 @@ RETURNING
 };
 
 export class VideoStorage extends Storage {
+  async fetch(videoId) {
+    const result = await this.db.query(Query.fetchRevision(videoId));
+    if (result.rowCount === 0) {
+      return null;
+    }
+
+    return Video.decode(result.rows[0]);
+  }
+
   async store(video) {
     try {
       await this.db.query('BEGIN');

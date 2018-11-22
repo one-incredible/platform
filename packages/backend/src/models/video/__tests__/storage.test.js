@@ -18,13 +18,48 @@ describe('Video Storage', () => {
     return db.end();
   });
 
-  describe('when storing', () => {
+  describe('#fetch', () => {
+    describe('when id badly formatted', () => {
+      it('throws error', () => {
+        expect(storage.fetch('bla-he')).rejects.toThrow();
+      });
+    });
+
+    describe('when not existing', () => {
+      it('returns null', async () => {
+        const video = await storage.fetch(
+          '2ebcd514-ee34-11e8-80c0-00090ffe0001'
+        );
+        expect(video).toBe(null);
+      });
+    });
+
+    describe('when video stored', () => {
+      let fixtureVideo;
+
+      beforeEach(async () => {
+        fixtureVideo = Video.decode({
+          id: uuidv4(),
+          name: 'My Video',
+        });
+        await storage.store(fixtureVideo);
+      });
+
+      it('returns video for id', async () => {
+        const returnedVideo = await storage.fetch(fixtureVideo.id);
+        expect(returnedVideo).toEqual(fixtureVideo);
+      });
+    });
+  });
+
+  describe('#store', () => {
     let video;
 
     beforeEach(async () => {
-      video = Object.assign({}, Video);
-      video.id = uuidv4();
-      video.name = 'My Video';
+      video = Video.decode({
+        id: uuidv4(),
+        name: 'My Video',
+      });
       await storage.store(video);
     });
 
