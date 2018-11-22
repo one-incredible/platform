@@ -35,9 +35,9 @@ export function createRevisionedStorageAdapter(Model, tableName) {
       await this.db.query(Query.promoteRevision(model, revision));
 
       await this.db.query('COMMIT');
-    } catch (e) {
+    } catch (error) {
       await this.db.query('ROLLBACK');
-      throw e;
+      throw error;
     }
   };
 
