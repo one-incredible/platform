@@ -50,3 +50,25 @@ export function createStoreRevision(Model, name) {
     };
   };
 }
+
+export function createPromoteRevision(name) {
+  const text = `INSERT INTO ${name} (id, revision) VALUES($1, $2)`;
+
+  return function createQuery(model, revisionNo) {
+    return {
+      text,
+      values: [model.id, revisionNo],
+    };
+  };
+}
+
+export function createRevokeRevision(name) {
+  const text = `DELETE FROM ${name} WHERE id = $1`;
+
+  return function createQuery(model) {
+    return {
+      text,
+      values: [model.id],
+    };
+  };
+}
