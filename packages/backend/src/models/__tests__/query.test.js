@@ -19,7 +19,7 @@ describe('Query modules', () => {
       const createQuery = createFetchRevision(Model, 'video');
       const query = createQuery('my-whatever-id');
       expect(query.text).toEqual(
-        'SELECT r.id, r.name, r.length, r.rate FROM video_revision r JOIN video p ON p.id = r.id AND p.revision = r.revision WHERE p.id = $1'
+        'SELECT r.* FROM video_revision r JOIN video p ON p.id = r.id AND p.revision = r.revision WHERE p.id = $1'
       );
       expect(query.values).toEqual(['my-whatever-id']);
     });
