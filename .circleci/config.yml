@@ -7,11 +7,11 @@ jobs:
       - checkout
       - run:
           name: Install Client Web
-          working_directory: projects/client-web
+          working_directory: packages/client-web
           command: yarn install
       - run:
           name: Test Client Web
-          working_directory: projects/client-web
+          working_directory: packages/client-web
           command: yarn run lint
 
   test-db-migration:
