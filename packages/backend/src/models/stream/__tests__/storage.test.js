@@ -35,7 +35,7 @@ describe('Stream Storage', () => {
     });
   });
 
-  describe.skip('#fetch', () => {
+  describe('#fetch', () => {
     describe('when id badly formatted', () => {
       it('throws error', () => {
         expect(storage.fetch('bla-he')).rejects.toThrow();

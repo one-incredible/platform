@@ -4,6 +4,10 @@ import {
   createStoreRevision,
 } from './query';
 
+function noop(value) {
+  return value;
+}
+
 export function createRevisionedStorageAdapter(Model, tableName) {
   const Query = {
     fetchRevision: createFetchRevision(Model, tableName),
@@ -12,13 +16,13 @@ export function createRevisionedStorageAdapter(Model, tableName) {
   };
 
   class StorageAdapter extends Storage {
-    async fetch(modelId) {
+    async fetch(modelId, prepare = noop) {
       const result = await this.db.query(Query.fetchRevision(modelId));
       if (result.rowCount === 0) {
         return null;
       }
 
-      return Model.decode(result.rows[0]);
+      return prepare(result.rows[0]);
     }
 
     async store(model) {
