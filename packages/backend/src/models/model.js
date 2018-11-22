@@ -27,11 +27,25 @@ export function field(name, encode = noop, decode = noop) {
     name,
     encode,
     decode,
+
+    columnName: name,
+    columnValue(model) {
+      return model[name];
+    },
   };
 }
 
 export function modelField(name, Model) {
-  return field(name, Model.encode, Model.decode);
+  return {
+    name,
+    encode: Model.encode,
+    decode: Model.decode,
+
+    columnName: `${name}_id`,
+    columnValue(model) {
+      return model[name].id;
+    },
+  };
 }
 
 export function createModel(fields) {

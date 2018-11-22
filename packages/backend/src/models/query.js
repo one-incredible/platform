@@ -20,7 +20,7 @@ export function createFetchRevision(Model, name) {
 export function createStoreRevision(Model, name) {
   const revisionTable = `${name}_revision`;
 
-  const columns = Model.fields.map(field => field.name);
+  const columns = Model.fields.map(field => field.columnName);
   const fields = [
     ...Model.fields.map((field, index) => '$' + (index + 1)),
     'COALESCE(MAX(revision) + 1, 1)',
@@ -38,7 +38,7 @@ export function createStoreRevision(Model, name) {
   return function createQuery(model) {
     return {
       text,
-      values: Model.fields.map(field => model[field.name]),
+      values: Model.fields.map(field => field.columnValue(model)),
     };
   };
 }
