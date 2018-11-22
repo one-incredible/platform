@@ -1,8 +1,4 @@
-class Storage {
-  constructor(db) {
-    this.db = db;
-  }
-}
+import { Storage } from '../storage';
 
 const Query = {
   updateRevision(video, revisionNo) {
