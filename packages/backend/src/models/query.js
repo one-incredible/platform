@@ -2,7 +2,7 @@ export function createFetchRevision(Model, name) {
   const parentTable = name;
   const revisionTable = `${name}_revision`;
 
-  const fields = Model.fields.map(field => `r.${field.name}`);
+  const fields = Model.fields.map(field => `r.${field.columnName}`);
 
   const text = [
     'SELECT ' + fields.join(', '),
