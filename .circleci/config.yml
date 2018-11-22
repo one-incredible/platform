@@ -66,3 +66,4 @@ workflows:
     jobs:
       - test-client-web
       - test-db-migration
+      - test-backend
