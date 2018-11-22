@@ -1,5 +1,10 @@
 import { createModel, field } from '../model';
-import { createFetchRevision, createStoreRevision } from '../query';
+import {
+  createFetchRevision,
+  createStoreRevision,
+  createRevokeRevision,
+  createPromoteRevision,
+} from '../query';
 
 describe('Query modules', () => {
   const Model = createModel([
@@ -40,6 +45,40 @@ describe('Query modules', () => {
         230.23,
         12,
       ]);
+    });
+  });
+
+  describe('#createPromoteRevision', () => {
+    it('creates a query builder based on model', () => {
+      const model = Model.decode({
+        id: '01837ed6-ee3e-11e8-b6f6-00090ffe0001',
+        name: 'Barry',
+        length: 230.23,
+        rate: 12,
+      });
+
+      const createQuery = createPromoteRevision('video');
+      const query = createQuery(model, 3);
+      expect(query.text).toEqual(
+        'INSERT INTO video (id, revision) VALUES($1, $2)'
+      );
+      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 3]);
+    });
+  });
+
+  describe('#createRevokeRevision', () => {
+    it('creates a query builder based on model', () => {
+      const model = Model.decode({
+        id: 'c5c2256e-ee3d-11e8-9cad-00090ffe0001',
+        name: 'Barry',
+        length: 230.23,
+        rate: 12,
+      });
+
+      const createQuery = createRevokeRevision('video');
+      const query = createQuery(model);
+      expect(query.text).toEqual('DELETE FROM video WHERE id = $1');
+      expect(query.values).toEqual(['c5c2256e-ee3d-11e8-9cad-00090ffe0001']);
     });
   });
 });
