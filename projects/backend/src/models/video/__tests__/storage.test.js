@@ -14,6 +14,10 @@ describe('Video Storage', () => {
     storage = new VideoStorage(db);
   });
 
+  afterAll(() => {
+    return db.end();
+  });
+
   describe('when storing', () => {
     let video;
 
