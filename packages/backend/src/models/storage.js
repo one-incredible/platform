@@ -11,33 +11,33 @@ export function createRevisionedStorageAdapter(Model, tableName) {
     promoteRevision: createPromoteRevision(tableName),
   };
 
-  class StorageAdapter extends Storage {}
+  class StorageAdapter extends Storage {
+    async fetch(modelId) {
+      const result = await this.db.query(Query.fetchRevision(modelId));
+      if (result.rowCount === 0) {
+        return null;
+      }
 
-  StorageAdapter.prototype.fetch = async function fetch(modelId) {
-    const result = await this.db.query(Query.fetchRevision(modelId));
-    if (result.rowCount === 0) {
-      return null;
+      return Model.decode(result.rows[0]);
     }
 
-    return Model.decode(result.rows[0]);
-  };
+    async store(model) {
+      try {
+        await this.db.query('BEGIN');
 
-  StorageAdapter.prototype.store = async function store(model) {
-    try {
-      await this.db.query('BEGIN');
+        const result = await this.db.query(Query.storeRevision(model));
 
-      const result = await this.db.query(Query.storeRevision(model));
+        const { revision } = result.rows[0];
 
-      const { revision } = result.rows[0];
+        await this.db.query(Query.promoteRevision(model, revision));
 
-      await this.db.query(Query.promoteRevision(model, revision));
-
-      await this.db.query('COMMIT');
-    } catch (error) {
-      await this.db.query('ROLLBACK');
-      throw error;
+        await this.db.query('COMMIT');
+      } catch (error) {
+        await this.db.query('ROLLBACK');
+        throw error;
+      }
     }
-  };
+  }
 
   return StorageAdapter;
 }
