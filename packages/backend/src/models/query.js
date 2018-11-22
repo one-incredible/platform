@@ -2,7 +2,9 @@ function createFetchRevision(Model, name) {
   const parentTable = name;
   const revisionTable = `${name}_revision`;
 
-  const fields = Model.fields.map(field => `r.${field.columnName}`);
+  const fields = Model.fields
+    .filter(field => field.columnName)
+    .map(field => `r.${field.columnName}`);
 
   const text = [
     'SELECT ' + fields.join(', '),
@@ -22,16 +24,14 @@ function createFetchRevision(Model, name) {
 function createStoreRevision(Model, name) {
   const revisionTable = `${name}_revision`;
 
-  const columns = Model.fields.map(field => field.columnName);
-  const fields = [
-    ...Model.fields.map((field, index) => '$' + (index + 1)),
-    'COALESCE(MAX(revision) + 1, 1)',
-  ];
+  const fields = Model.fields.filter(field => field.columnName);
+  const columns = fields.map(field => field.columnName);
+  const placeholders = fields.map((field, index) => '$' + (index + 1));
 
   const text = [
     `INSERT INTO ${revisionTable}`,
     '(' + [...columns, 'revision'].join(', ') + ')',
-    'SELECT ' + fields.join(', '),
+    'SELECT ' + [...placeholders, 'COALESCE(MAX(revision) + 1, 1)'].join(', '),
     `FROM ${revisionTable}`,
     'WHERE id = $1',
     'RETURNING revision',
@@ -40,7 +40,7 @@ function createStoreRevision(Model, name) {
   return function createQuery(model) {
     return {
       text,
-      values: Model.fields.map(field => field.columnValue(model)),
+      values: fields.map(field => field.columnValue(model)),
     };
   };
 }
