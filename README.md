@@ -4,7 +4,7 @@ The Oneincredible video platform.
 
 ## Installation Prerequisites
 
-Install Yarn
+Install Yarn.
 ```
 sudo npm install yarn -g
 ```
@@ -16,7 +16,8 @@ Clone this repository.
 git clone https://github.com/oneincredible/platform.git
 ```
 
-Execute docker compose
+Execute docker compose.
+
 ```
 cd platform
 docker-compose up -d
