@@ -1,12 +1,31 @@
 class Storage {
-    constructor(db) {
-        this.db = db;
-    }
+  constructor(db) {
+    this.db = db;
+  }
 }
 
-export class VideoStorage extends Storage {
-    async store(video) {
-        const query = `INSERT INTO video_revision
+const Query = {
+  updateRevision(video, revisionNo) {
+    return {
+      text: `
+INSERT INTO video
+(
+    id,
+    revision
+)
+VALUES
+(
+    $1,
+    $2
+)`,
+      values: [video.id, revisionNo],
+    };
+  },
+
+  storeRevision(video) {
+    return {
+      text: `
+INSERT INTO video_revision
 (
     parent,
     name,
@@ -19,30 +38,34 @@ SELECT
         MAX(revision) + 1,
         1
     )
-FROM video_revision WHERE parent = $3
-RETURNING revision
-`;
-        return this.db.query(query, [
-            video.id,
-            video.name,
-            video.id,
-        ])
-        .then(result => {
-            const {revision} = result.rows[0];
-            const query = ` INSERT INTO video
-(
-    id,
+FROM
+    video_revision
+WHERE
+    parent = $3
+RETURNING
     revision
-)
-VALUES
-(
-    $1,
-    $2
-)`;
-            return this.db.query(query, [
-                video.id,
-                revision,
-            ]);
-        });
+`,
+      values: [video.id, video.name, video.id],
+    };
+  },
+};
+
+export class VideoStorage extends Storage {
+  async store(video) {
+    try {
+      await this.db.query('BEGIN');
+      await this.db.query('DELETE FROM video WHERE id = $1', [video.id]);
+
+      const result = await this.db.query(Query.storeRevision(video));
+
+      const { revision } = result.rows[0];
+
+      await this.db.query(Query.updateRevision(video, revision));
+
+      await this.db.query('COMMIT');
+    } catch (e) {
+      await this.db.query('ROLLBACK');
+      throw e;
     }
+  }
 }
