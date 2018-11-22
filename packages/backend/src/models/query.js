@@ -6,13 +6,13 @@ export function createFetchRevision(Model, name) {
 
   const text = [
     'SELECT',
-    ['r.parent AS id', ...fields].join(', '),
+    fields.join(', '),
     'FROM',
     `${revisionTable} r`,
     'JOIN',
     `${parentTable} p`,
     'ON',
-    'v.id = r.parent AND v.revision = r.revision',
+    'p.id = r.id AND p.revision = r.revision',
     'WHERE',
     'p.id = $1',
   ].join(' ');
