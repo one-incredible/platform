@@ -10,6 +10,18 @@ services:
       POSTGRES_USER: platform
       POSTGRES_PASSWORD: mock123
 
+  backend:
+    image: backend
+    build:
+      context: projects/backend
+    depends_on:
+     - database
+    environment:
+      PGHOST: database
+      PGDATABASE: platform
+      PGUSER: platform
+      PGPASSWORD: mock123
+
   migration:
     image: migration
     build:
