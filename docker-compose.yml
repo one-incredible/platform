@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  database:
+    image: postgres:9.6-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: platform
+      POSTGRES_USER: platform
+      POSTGRES_PASSWORD: mock123
+
+  migration:
+    image: migration
+    build:
+      context: projects/db
+    depends_on:
+     - database
+    command:
+      - -url=jdbc:postgresql://database/platform
+      - -user=platform
+      - -password=mock123
+      - migrate

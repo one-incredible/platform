@@ -17,6 +17,7 @@ git clone https://github.com/oneincredible/platform.git
 ```
 
 Execute docker compose.
+
 ```
 cd platform
 docker-compose up -d
