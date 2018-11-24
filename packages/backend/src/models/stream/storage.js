@@ -11,14 +11,6 @@ class StreamStorage extends createRevisionedStorageAdapter(Stream, 'stream') {
       };
     });
   }
-
-  async store(stream) {
-    await Promise.all([
-      this.composed.file.store(stream.file),
-      this.composed.resolution.store(stream.resolution),
-    ]);
-    await super.store(stream);
-  }
 }
 
 module.exports = {
