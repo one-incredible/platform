@@ -1,8 +1,8 @@
 const express = require('express');
-//const { FileStorage } = require('models/file/storage');
+const { FileStorage } = require('models/file/storage');
 
-function createFileAPIRouter() {
-  //const storage = new FileStorage(db);
+function createFileAPIRouter(db) {
+  const storage = new FileStorage(db);
 
   const router = express.Router();
 
