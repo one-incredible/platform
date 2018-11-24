@@ -26,8 +26,8 @@ function listField(name, Model) {
   return {
     type: Type.LIST,
     name,
-    encode: values => values.map(Model.encode),
-    decode: values => values.map(Model.decode),
+    encode: values => (values ? values.map(Model.encode) : null),
+    decode: values => (values ? values.map(Model.decode) : null),
   };
 }
 
