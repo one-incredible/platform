@@ -1,8 +1,8 @@
 const express = require('express');
-const api = require('./api');
+const { createAPI } = require('./api');
 
 const app = express();
 
-app.use('/api', api);
+app.use('/api', createAPI());
 
 module.exports = app;
