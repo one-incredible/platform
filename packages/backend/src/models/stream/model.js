@@ -1,12 +1,12 @@
 const { createModel } = require('../model');
-const { field, modelField } = require('../field');
+const { value, model } = require('../field');
 const { File } = require('../file/model');
 const { Resolution } = require('../resolution/model');
 
 const Stream = createModel([
-  field('id'),
-  modelField('resolution', Resolution),
-  modelField('file', File),
+  value('id'),
+  model('resolution', Resolution),
+  model('file', File),
 ]);
 
 module.exports = {
