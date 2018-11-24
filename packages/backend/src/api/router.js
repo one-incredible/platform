@@ -42,6 +42,30 @@ function createStorageRouter(Model, storage) {
     res.send(Model.encode(result));
   });
 
+  for (const [name, relatedStorage] of Object.entries(storage.relations)) {
+    router.put(
+      `/:parentId/${name}/:childId`,
+      ensureUUID('parentId'),
+      ensureUUID('childId'),
+      async (req, res) => {
+        const { parentId, childId } = req.params;
+        await relatedStorage.add(parentId, childId);
+        res.end();
+      }
+    );
+
+    router.delete(
+      `/:parentId/${name}/:childId`,
+      ensureUUID('parentId'),
+      ensureUUID('childId'),
+      async (req, res) => {
+        const { parentId, childId } = req.params;
+        await relatedStorage.remove(parentId, childId);
+        res.end();
+      }
+    );
+  }
+
   return router;
 }
 
