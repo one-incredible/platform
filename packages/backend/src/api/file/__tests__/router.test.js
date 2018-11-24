@@ -1,6 +1,7 @@
 const uuidv4 = require('uuid/v4');
 const request = require('supertest');
-const app = require('app');
+const { Pool } = require('pg');
+const { createApp } = require('app');
 
 function createFile() {
   return {
@@ -12,6 +13,17 @@ function createFile() {
 }
 
 describe('File API', () => {
+  let app, db;
+
+  beforeAll(() => {
+    db = new Pool();
+    app = createApp(db);
+  });
+
+  afterAll(() => {
+    return db.end();
+  });
+
   describe('GET /', () => {
     describe('with non-existing id', () => {
       it('responds with 404', done => {
