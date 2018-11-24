@@ -6,8 +6,9 @@ function createFileAPIRouter(db) {
 
   const router = express.Router();
 
-  router.get('/', (req, res) => {
-    res.send('Hello file');
+  router.get('/', async (req, res) => {
+    const result = await storage.fetch('c8f39c98-efc0-11e8-9bbb-00090ffe0001');
+    res.send(`Hello file ${result}`);
   });
 
   return router;
