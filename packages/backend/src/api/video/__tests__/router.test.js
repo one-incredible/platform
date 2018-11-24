@@ -163,10 +163,10 @@ describe('Stream API', () => {
             request(app)
               .get(`/api/video/${video.id}`)
               .expect(200)
-              .expect({
-                id: video.id,
-                name: 'Hello',
-                streams: [streams[0], streams[1]],
+              .expect(response => {
+                const video = response.body;
+                expect(video.streams).toContainEqual(streams[0]);
+                expect(video.streams).toContainEqual(streams[1]);
               })
               .end(done);
           });

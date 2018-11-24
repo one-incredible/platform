@@ -88,8 +88,8 @@ describe('Video Storage', () => {
         it('stream is avaiable on video', async () => {
           const returnedVideo = await storage.fetch(fixtureVideo.id);
           expect(returnedVideo.streams.length).toEqual(2);
-          expect(returnedVideo.streams[0]).toEqual(fixtureStreams[0]);
-          expect(returnedVideo.streams[1]).toEqual(fixtureStreams[2]);
+          expect(returnedVideo.streams).toContainEqual(fixtureStreams[0]);
+          expect(returnedVideo.streams).toContainEqual(fixtureStreams[2]);
         });
 
         describe('then stream detached', () => {
