@@ -1,4 +1,5 @@
-const { createModel, field, modelField } = require('../model');
+const { createModel } = require('../model');
+const { field, modelField } = require('../field');
 const { File } = require('../file/model');
 const { Resolution } = require('../resolution/model');
 

@@ -1,4 +1,5 @@
-const { createModel, field } = require('../model');
+const { createModel } = require('../model');
+const { field } = require('../field');
 const { int } = require('../transform');
 
 const Resolution = createModel([
