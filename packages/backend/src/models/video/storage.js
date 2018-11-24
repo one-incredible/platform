@@ -20,11 +20,11 @@ class VideoStorage extends createRevisionedStorageAdapter(Video, 'video') {
 
   async fetch(videoId) {
     return await super.fetch(videoId, async result => {
-      return Video.decode({
+      return {
         id: result.id,
         name: result.name,
         streams: await this.relations.stream.fetch(result.id),
-      });
+      };
     });
   }
 }
