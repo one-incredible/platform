@@ -69,7 +69,7 @@ function createRevisionedStorageAdapter(Model, tableName) {
   class RevisionedStorageAdapter extends Storage {
     constructor(db) {
       super(db);
-      this.relations = {};
+      this.relations = Object.create(null);
     }
 
     async fetch(modelId, prepare = noop) {
