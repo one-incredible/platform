@@ -14,25 +14,6 @@ jobs:
           working_directory: packages/client-web
           command: yarn run lint
 
-  test-db-migration:
-    docker:
-      - image: circleci/python:3.6
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run:
-          name: Rebuild Docker Containers
-          command: docker-compose build
-      - run:
-          name: Setup environment
-          command: docker-compose up -d database
-      - run:
-          name: Database Startup Graceperiod
-          command: sleep 5
-      - run:
-          name: Test Database Migrations
-          command: docker-compose run migration
-
   test-backend:
     docker:
       - image: circleci/node:8
@@ -41,7 +22,7 @@ jobs:
       - checkout
       - run:
           name: Rebuild Docker Containers
-          command: docker-compose build
+          command: docker-compose build migration backend
       - run:
           name: Setup environment
           command: docker-compose up -d database
@@ -60,5 +41,4 @@ workflows:
   test-flow:
     jobs:
       - test-client-web
-      - test-db-migration
       - test-backend
