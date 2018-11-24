@@ -47,7 +47,7 @@ function createStreamFactory(db) {
   );
 }
 
-describe('Stream API', () => {
+describe('Video API', () => {
   let app, db, videoFactory, streamFactory;
 
   beforeAll(() => {
