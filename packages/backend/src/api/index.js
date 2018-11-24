@@ -1,5 +1,5 @@
 const express = require('express');
-const { createFileAPIRouter } = require('./file');
+const { createFileAPIRouter } = require('./file/router');
 
 function createAPI(db) {
   const router = express.Router();
