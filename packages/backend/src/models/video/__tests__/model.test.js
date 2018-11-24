@@ -1,4 +1,4 @@
-import { Video } from '../model';
+const { Video } = require('../model');
 
 describe('Video Model', () => {
   describe('#decode', () => {

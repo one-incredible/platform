@@ -1,4 +1,4 @@
-export function createFetchRevision(Model, name) {
+function createFetchRevision(Model, name) {
   const parentTable = name;
   const revisionTable = `${name}_revision`;
 
@@ -19,7 +19,7 @@ export function createFetchRevision(Model, name) {
   };
 }
 
-export function createStoreRevision(Model, name) {
+function createStoreRevision(Model, name) {
   const revisionTable = `${name}_revision`;
 
   const columns = Model.fields.map(field => field.columnName);
@@ -45,7 +45,7 @@ export function createStoreRevision(Model, name) {
   };
 }
 
-export function createPromoteRevision(name) {
+function createPromoteRevision(name) {
   const insert = `INSERT INTO ${name} (id, revision) VALUES($1, $2)`;
   const update = `UPDATE ${name} SET revision = $2 WHERE id = $1`;
 
@@ -57,7 +57,7 @@ export function createPromoteRevision(name) {
   };
 }
 
-export function createRevokeRevision(name) {
+function createRevokeRevision(name) {
   const text = `DELETE FROM ${name} WHERE id = $1`;
 
   return function createQuery(model) {
@@ -67,3 +67,10 @@ export function createRevokeRevision(name) {
     };
   };
 }
+
+module.exports = {
+  createFetchRevision,
+  createStoreRevision,
+  createPromoteRevision,
+  createRevokeRevision,
+};

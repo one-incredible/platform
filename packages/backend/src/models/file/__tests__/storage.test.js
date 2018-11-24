@@ -1,7 +1,7 @@
-import uuidv4 from 'uuid/v4';
-import { Pool } from 'pg';
-import { File } from '../model';
-import { FileStorage } from '../storage';
+const uuidv4 = require('uuid/v4');
+const { Pool } = require('pg');
+const { File } = require('../model');
+const { FileStorage } = require('../storage');
 
 describe('File Storage', () => {
   let storage, db, fixture;

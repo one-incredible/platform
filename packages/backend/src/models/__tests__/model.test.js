@@ -1,5 +1,5 @@
-import { createModel, field } from '../model';
-import { float, int } from '../transform';
+const { createModel, field } = require('../model');
+const { float, int } = require('../transform');
 
 describe('Model modules', () => {
   describe('#createModel', () => {

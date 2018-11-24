@@ -1,12 +1,9 @@
-import { createRevisionedStorageAdapter } from '../storage';
-import { ResolutionStorage } from '../resolution/storage';
-import { FileStorage } from '../file/storage';
-import { Stream } from './model';
+const { createRevisionedStorageAdapter } = require('../storage');
+const { ResolutionStorage } = require('../resolution/storage');
+const { FileStorage } = require('../file/storage');
+const { Stream } = require('./model');
 
-export class StreamStorage extends createRevisionedStorageAdapter(
-  Stream,
-  'stream'
-) {
+class StreamStorage extends createRevisionedStorageAdapter(Stream, 'stream') {
   constructor(db) {
     super(db);
 
@@ -32,3 +29,7 @@ export class StreamStorage extends createRevisionedStorageAdapter(
     await super.store(stream);
   }
 }
+
+module.exports = {
+  StreamStorage,
+};

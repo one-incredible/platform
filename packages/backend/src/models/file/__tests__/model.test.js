@@ -1,4 +1,4 @@
-import { File } from '../model';
+const { File } = require('../model');
 
 describe('File Model', () => {
   it('decodes', () => {

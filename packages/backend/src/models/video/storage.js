@@ -1,11 +1,12 @@
-import { createRevisionedStorageAdapter } from '../storage';
-import { Video } from './model';
+const { createRevisionedStorageAdapter } = require('../storage');
+const { Video } = require('./model');
 
-export class VideoStorage extends createRevisionedStorageAdapter(
-  Video,
-  'video'
-) {
+class VideoStorage extends createRevisionedStorageAdapter(Video, 'video') {
   async fetch(videoId) {
     return await super.fetch(videoId, result => Video.decode(result));
   }
 }
+
+module.exports = {
+  VideoStorage,
+};

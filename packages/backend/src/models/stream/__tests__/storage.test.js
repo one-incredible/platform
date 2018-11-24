@@ -1,7 +1,7 @@
-import uuidv4 from 'uuid/v4';
-import { Pool } from 'pg';
-import { Stream } from '../model';
-import { StreamStorage } from '../storage';
+const uuidv4 = require('uuid/v4');
+const { Pool } = require('pg');
+const { Stream } = require('../model');
+const { StreamStorage } = require('../storage');
 
 describe('Stream Storage', () => {
   let storage, db, fixture;

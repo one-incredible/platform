@@ -1,7 +1,7 @@
-import uuidv4 from 'uuid/v4';
-import { Pool } from 'pg';
-import { Video } from '../model';
-import { VideoStorage } from '../storage';
+const uuidv4 = require('uuid/v4');
+const { Pool } = require('pg');
+const { Video } = require('../model');
+const { VideoStorage } = require('../storage');
 
 describe('Video Storage', () => {
   let storage, db;

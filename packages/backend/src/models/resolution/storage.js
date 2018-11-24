@@ -1,7 +1,7 @@
-import { createRevisionedStorageAdapter } from '../storage';
-import { Resolution } from './model';
+const { createRevisionedStorageAdapter } = require('../storage');
+const { Resolution } = require('./model');
 
-export class ResolutionStorage extends createRevisionedStorageAdapter(
+class ResolutionStorage extends createRevisionedStorageAdapter(
   Resolution,
   'resolution'
 ) {
@@ -9,3 +9,7 @@ export class ResolutionStorage extends createRevisionedStorageAdapter(
     return await super.fetch(resolutionId, result => Resolution.decode(result));
   }
 }
+
+module.exports = {
+  ResolutionStorage,
+};

@@ -1,7 +1,7 @@
-import uuidv4 from 'uuid/v4';
-import { Pool } from 'pg';
-import { Resolution } from '../model';
-import { ResolutionStorage } from '../storage';
+const uuidv4 = require('uuid/v4');
+const { Pool } = require('pg');
+const { Resolution } = require('../model');
+const { ResolutionStorage } = require('../storage');
 
 describe('Resolution Storage', () => {
   let storage, db, fixture;

@@ -1,4 +1,4 @@
-import { Resolution } from '../model';
+const { Resolution } = require('../model');
 
 describe('Resolution Model', () => {
   it('decodes', () => {
