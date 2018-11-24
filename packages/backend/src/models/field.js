@@ -1,9 +1,16 @@
+const Type = {
+  VALUE: Symbol('value field'),
+  LIST: Symbol('list field'),
+  MODEL: Symbol('model field'),
+};
+
 function noop(value) {
   return value;
 }
 
 function field(name, encode = noop, decode = noop) {
   return {
+    type: Type.VALUE,
     name,
     encode,
     decode,
@@ -17,6 +24,7 @@ function field(name, encode = noop, decode = noop) {
 
 function listField(name, Model) {
   return {
+    type: Type.LIST,
     name,
     encode: values => values.map(Model.encode),
     decode: values => values.map(Model.decode),
@@ -25,6 +33,7 @@ function listField(name, Model) {
 
 function modelField(name, Model) {
   return {
+    type: Type.MODEL,
     name,
     encode: Model.encode,
     decode: Model.decode,
@@ -37,6 +46,7 @@ function modelField(name, Model) {
 }
 
 module.exports = {
+  Type,
   field,
   listField,
   modelField,
