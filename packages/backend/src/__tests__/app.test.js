@@ -1,7 +1,19 @@
 const request = require('supertest');
-const app = require('../app');
+const { Pool } = require('pg');
+const { createApp } = require('../app');
 
 describe('App', () => {
+  let app, db;
+
+  beforeAll(() => {
+    db = new Pool();
+    app = createApp(db);
+  });
+
+  afterAll(() => {
+    return db.end();
+  });
+
   describe('/api', () => {
     describe('GET /', () => {
       it('responds with Hello world', done => {
