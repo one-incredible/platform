@@ -75,8 +75,14 @@ describe('Video Storage', () => {
 
       describe('and streams attached', () => {
         beforeEach(async () => {
-          await storage.addStream(fixtureVideo.id, fixtureStreams[0].id);
-          await storage.addStream(fixtureVideo.id, fixtureStreams[2].id);
+          await storage.relations.stream.add(
+            fixtureVideo.id,
+            fixtureStreams[0].id
+          );
+          await storage.relations.stream.add(
+            fixtureVideo.id,
+            fixtureStreams[2].id
+          );
         });
 
         it('stream is avaiable on video', async () => {
@@ -88,7 +94,10 @@ describe('Video Storage', () => {
 
         describe('then stream detached', () => {
           beforeEach(async () => {
-            await storage.removeStream(fixtureVideo.id, fixtureStreams[0].id);
+            await storage.relations.stream.remove(
+              fixtureVideo.id,
+              fixtureStreams[0].id
+            );
           });
 
           it('stream is removed from video', async () => {
