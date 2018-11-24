@@ -63,7 +63,7 @@ describe('Video Storage', () => {
         fixtureVideo = Video.decode({
           id: uuidv4(),
           name: 'My Video',
-          streams: [],
+          stream: [],
         });
         await storage.store(fixtureVideo);
       });
@@ -87,9 +87,9 @@ describe('Video Storage', () => {
 
         it('stream is avaiable on video', async () => {
           const returnedVideo = await storage.fetch(fixtureVideo.id);
-          expect(returnedVideo.streams.length).toEqual(2);
-          expect(returnedVideo.streams).toContainEqual(fixtureStreams[0]);
-          expect(returnedVideo.streams).toContainEqual(fixtureStreams[2]);
+          expect(returnedVideo.stream.length).toEqual(2);
+          expect(returnedVideo.stream).toContainEqual(fixtureStreams[0]);
+          expect(returnedVideo.stream).toContainEqual(fixtureStreams[2]);
         });
 
         describe('then stream detached', () => {
@@ -102,8 +102,8 @@ describe('Video Storage', () => {
 
           it('stream is removed from video', async () => {
             const returnedVideo = await storage.fetch(fixtureVideo.id);
-            expect(returnedVideo.streams.length).toEqual(1);
-            expect(returnedVideo.streams[0]).toEqual(fixtureStreams[2]);
+            expect(returnedVideo.stream.length).toEqual(1);
+            expect(returnedVideo.stream[0]).toEqual(fixtureStreams[2]);
           });
         });
       });
@@ -117,7 +117,7 @@ describe('Video Storage', () => {
       video = Video.decode({
         id: uuidv4(),
         name: 'My Video',
-        streams: [],
+        stream: [],
       });
       await storage.store(video);
     });
