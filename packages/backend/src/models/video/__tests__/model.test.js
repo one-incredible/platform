@@ -6,9 +6,9 @@ describe('Video Model', () => {
       const model = Video.decode({
         id: 'any-string',
         name: 'A name',
-        streams: [],
+        stream: [],
       });
-      expect(model).toEqual({ id: 'any-string', name: 'A name', streams: [] });
+      expect(model).toEqual({ id: 'any-string', name: 'A name', stream: [] });
     });
   });
 
@@ -17,12 +17,12 @@ describe('Video Model', () => {
       const payload = Video.encode({
         id: 'any-string',
         name: 'A name',
-        streams: [],
+        stream: [],
       });
       expect(payload).toEqual({
         id: 'any-string',
         name: 'A name',
-        streams: [],
+        stream: [],
       });
     });
   });

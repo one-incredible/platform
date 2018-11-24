@@ -23,7 +23,7 @@ class VideoStorage extends createRevisionedStorageAdapter(Video, 'video') {
       return {
         id: result.id,
         name: result.name,
-        streams: await this.relations.stream.fetch(result.id),
+        stream: await this.relations.stream.fetch(result.id),
       };
     });
   }

@@ -91,7 +91,7 @@ describe('Stream API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
-            streams: [],
+            stream: [],
           })
           .end(done);
       });
@@ -122,7 +122,7 @@ describe('Stream API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
-            streams: [],
+            stream: [],
           })
           .end(done);
       });
@@ -146,7 +146,7 @@ describe('Stream API', () => {
             .expect({
               id: video.id,
               name: 'Hello',
-              streams: [streams[0]],
+              stream: [streams[0]],
             })
             .end(done);
         });
@@ -165,8 +165,8 @@ describe('Stream API', () => {
               .expect(200)
               .expect(response => {
                 const video = response.body;
-                expect(video.streams).toContainEqual(streams[0]);
-                expect(video.streams).toContainEqual(streams[1]);
+                expect(video.stream).toContainEqual(streams[0]);
+                expect(video.stream).toContainEqual(streams[1]);
               })
               .end(done);
           });
@@ -187,7 +187,7 @@ describe('Stream API', () => {
               .expect({
                 id: video.id,
                 name: 'Hello',
-                streams: [],
+                stream: [],
               })
               .end(done);
           });
@@ -213,7 +213,7 @@ describe('Stream API', () => {
             .expect({
               id: video.id,
               name: 'Good bye',
-              streams: [],
+              stream: [],
             })
             .end(done);
         });
