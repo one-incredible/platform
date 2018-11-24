@@ -50,6 +50,7 @@ function createStorageRouter(Model, storage) {
       async (req, res) => {
         const { parentId, childId } = req.params;
         await relatedStorage.add(parentId, childId);
+        res.statusCode = 201;
         res.end();
       }
     );
