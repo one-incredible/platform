@@ -91,6 +91,7 @@ describe('Video API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
+            image: [],
             stream: [],
           })
           .end(done);
@@ -122,6 +123,7 @@ describe('Video API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
+            image: [],
             stream: [],
           })
           .end(done);
@@ -146,6 +148,7 @@ describe('Video API', () => {
             .expect({
               id: video.id,
               name: 'Hello',
+              image: [],
               stream: [streams[0]],
             })
             .end(done);
@@ -187,6 +190,7 @@ describe('Video API', () => {
               .expect({
                 id: video.id,
                 name: 'Hello',
+                image: [],
                 stream: [],
               })
               .end(done);
@@ -213,6 +217,7 @@ describe('Video API', () => {
             .expect({
               id: video.id,
               name: 'Good bye',
+              image: [],
               stream: [],
             })
             .end(done);
