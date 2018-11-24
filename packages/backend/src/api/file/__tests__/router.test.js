@@ -18,7 +18,12 @@ describe('File API', () => {
         request(app)
           .get('/api/file/b1354cdc-efc5-11e8-9804-00090ffe0001')
           .expect(404)
-          .expect('')
+          .expect({
+            error: {
+              message:
+                'No object found for b1354cdc-efc5-11e8-9804-00090ffe0001',
+            },
+          })
           .end(done);
       });
     });

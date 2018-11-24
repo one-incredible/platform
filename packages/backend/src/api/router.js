@@ -29,10 +29,15 @@ function createStorageRouter(Model, storage) {
   });
 
   router.get('/:modelId', ensureUUID('modelId'), async (req, res) => {
-    const result = await storage.fetch(req.params.modelId);
+    const id = req.params.modelId;
+    const result = await storage.fetch(id);
     if (!result) {
       res.statusCode = 404;
-      return res.end();
+      return res.send({
+        error: {
+          message: `No object found for ${id}`,
+        },
+      });
     }
     res.send(Model.encode(result));
   });
