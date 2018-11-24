@@ -53,7 +53,7 @@ jobs:
           command: docker-compose run migration
       - run:
           name: Test Backend
-          command: docker-compose run backend yarn test --ci --runInBand
+          command: docker-compose run -e CI=true backend yarn test --verbose
 
 workflows:
   version: 2
