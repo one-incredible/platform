@@ -1,4 +1,4 @@
-import { Stream } from '../model';
+const { Stream } = require('../model');
 
 describe('Stream Model', () => {
   it('decodes', () => {

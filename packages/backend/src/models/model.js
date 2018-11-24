@@ -22,7 +22,7 @@ function createDeserializer(fields) {
   };
 }
 
-export function field(name, encode = noop, decode = noop) {
+function field(name, encode = noop, decode = noop) {
   return {
     name,
     encode,
@@ -35,7 +35,7 @@ export function field(name, encode = noop, decode = noop) {
   };
 }
 
-export function modelField(name, Model) {
+function modelField(name, Model) {
   return {
     name,
     encode: Model.encode,
@@ -48,7 +48,7 @@ export function modelField(name, Model) {
   };
 }
 
-export function createModel(fields) {
+function createModel(fields) {
   const encode = createSerializer(fields);
   const decode = createDeserializer(fields);
 
@@ -58,3 +58,9 @@ export function createModel(fields) {
     decode,
   };
 }
+
+module.exports = {
+  field,
+  modelField,
+  createModel,
+};

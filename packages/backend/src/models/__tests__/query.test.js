@@ -1,10 +1,10 @@
-import { createModel, field } from '../model';
-import {
+const { createModel, field } = require('../model');
+const {
   createFetchRevision,
   createStoreRevision,
   createRevokeRevision,
   createPromoteRevision,
-} from '../query';
+} = require('../query');
 
 describe('Query modules', () => {
   const Model = createModel([

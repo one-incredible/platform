@@ -1,9 +1,13 @@
-import { createModel, field } from '../model';
-import { int } from '../transform';
+const { createModel, field } = require('../model');
+const { int } = require('../transform');
 
-export const File = createModel([
+const File = createModel([
   field('id'),
   field('path'),
   field('mime'),
   field('size', int(10), int(10)),
 ]);
+
+module.exports = {
+  File,
+};

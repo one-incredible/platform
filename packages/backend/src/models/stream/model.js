@@ -1,9 +1,13 @@
-import { createModel, field, modelField } from '../model';
-import { File } from '../file/model';
-import { Resolution } from '../resolution/model';
+const { createModel, field, modelField } = require('../model');
+const { File } = require('../file/model');
+const { Resolution } = require('../resolution/model');
 
-export const Stream = createModel([
+const Stream = createModel([
   field('id'),
   modelField('resolution', Resolution),
   modelField('file', File),
 ]);
+
+module.exports = {
+  Stream,
+};

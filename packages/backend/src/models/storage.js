@@ -1,14 +1,14 @@
-import {
+const {
   createPromoteRevision,
   createFetchRevision,
   createStoreRevision,
-} from './query';
+} = require('./query');
 
 function noop(value) {
   return value;
 }
 
-export function createRevisionedStorageAdapter(Model, tableName) {
+function createRevisionedStorageAdapter(Model, tableName) {
   const Query = {
     fetchRevision: createFetchRevision(Model, tableName),
     storeRevision: createStoreRevision(Model, tableName),
@@ -46,8 +46,13 @@ export function createRevisionedStorageAdapter(Model, tableName) {
   return StorageAdapter;
 }
 
-export class Storage {
+class Storage {
   constructor(db) {
     this.db = db;
   }
 }
+
+module.exports = {
+  createRevisionedStorageAdapter,
+  Storage,
+};

@@ -1,3 +1,7 @@
-import { createModel, field } from '../model';
+const { createModel, field } = require('../model');
 
-export const Video = createModel([field('id'), field('name')]);
+const Video = createModel([field('id'), field('name')]);
+
+module.exports = {
+  Video,
+};

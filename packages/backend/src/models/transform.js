@@ -1,7 +1,12 @@
-export function int(base = 10) {
+function int(base = 10) {
   return value => parseInt(value, base);
 }
 
-export function float() {
+function float() {
   return parseFloat;
 }
+
+module.exports = {
+  int,
+  float,
+};

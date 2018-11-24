@@ -1,8 +1,12 @@
-import { createModel, field } from '../model';
-import { int } from '../transform';
+const { createModel, field } = require('../model');
+const { int } = require('../transform');
 
-export const Resolution = createModel([
+const Resolution = createModel([
   field('id'),
   field('width', int(10), int(10)),
   field('height', int(10), int(10)),
 ]);
+
+module.exports = {
+  Resolution,
+};
