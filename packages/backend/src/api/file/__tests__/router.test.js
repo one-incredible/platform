@@ -2,6 +2,15 @@ const uuidv4 = require('uuid/v4');
 const request = require('supertest');
 const app = require('app');
 
+function createFile() {
+  return {
+    id: uuidv4(),
+    path: 'my/file/here.mp4',
+    mime: 'video/mp4',
+    size: 21152125,
+  };
+}
+
 describe('File API', () => {
   describe('GET /', () => {
     describe('with non-existing id', () => {
@@ -18,12 +27,7 @@ describe('File API', () => {
       let file;
 
       beforeEach(done => {
-        file = {
-          id: uuidv4(),
-          path: 'my/file/here.mp4',
-          mime: 'video/mp4',
-          size: 21152125,
-        };
+        file = createFile();
 
         request(app)
           .post('/api/file/')
@@ -46,12 +50,7 @@ describe('File API', () => {
     let file;
 
     beforeEach(() => {
-      file = {
-        id: uuidv4(),
-        path: 'my/file/here.mp4',
-        mime: 'video/mp4',
-        size: 21152125,
-      };
+      file = createFile();
     });
 
     describe('with non-existing id', () => {
