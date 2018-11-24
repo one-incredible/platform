@@ -90,7 +90,16 @@ function createRevisionedStorageAdapter(Model, tableName) {
         return null;
       }
 
-      return prepare(result.rows[0]);
+      const model = result.rows[0];
+
+      await Promise.all(
+        modelFields.map(async ({ name, columnName }) => {
+          model[name] = await this.composed[name].fetch(model[columnName]);
+          delete model[columnName];
+        })
+      );
+
+      return prepare(model);
     }
 
     async store(model) {
