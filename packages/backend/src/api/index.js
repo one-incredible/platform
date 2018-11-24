@@ -1,5 +1,6 @@
 const express = require('express');
 const { createFileAPIRouter } = require('./file/router');
+const { createStreamAPIRouter } = require('./stream/router');
 
 function createAPI(db) {
   const router = express.Router();
@@ -11,6 +12,7 @@ function createAPI(db) {
   });
 
   router.use('/file', createFileAPIRouter(db));
+  router.use('/stream', createStreamAPIRouter(db));
 
   return router;
 }
