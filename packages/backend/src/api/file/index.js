@@ -2,25 +2,32 @@ const express = require('express');
 const { File } = require('models/file/model');
 const { FileStorage } = require('models/file/storage');
 
-function createFileAPIRouter(db) {
-  const storage = new FileStorage(db);
-
+function createStorageRouter(Model, storage) {
   const router = express.Router();
 
   router.post('/', async (req, res) => {
-    const file = File.decode(req.body);
-    await storage.store(file);
+    const model = Model.decode(req.body);
+    await storage.store(model);
     res.statusCode = 201;
-    res.set('location', `${req.baseUrl}/${file.id}`);
+    res.set('location', `${req.baseUrl}/${model.id}`);
     res.end();
   });
 
-  router.get('/', async (req, res) => {
-    const result = await storage.fetch('c8f39c98-efc0-11e8-9bbb-00090ffe0001');
-    res.send(`Hello file ${result}`);
+  router.get('/:modelId', async (req, res) => {
+    const result = await storage.fetch(req.params.modelId);
+    if (!result) {
+      res.statusCode = 404;
+      return res.end();
+    }
+    res.send(Model.encode(result));
   });
 
   return router;
+}
+
+function createFileAPIRouter(db) {
+  const storage = new FileStorage(db);
+  return createStorageRouter(File, storage);
 }
 
 module.exports = {
