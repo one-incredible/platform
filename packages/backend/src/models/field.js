@@ -21,13 +21,15 @@ function value(name, transform = noop) {
   };
 }
 
-function list(name, Model) {
+function list(name, Model, StorageAdapter) {
   return {
     type: Type.LIST,
     name,
 
     encode: values => (values ? values.map(Model.encode) : null),
     decode: values => (values ? values.map(Model.decode) : null),
+
+    StorageAdapter,
   };
 }
 
