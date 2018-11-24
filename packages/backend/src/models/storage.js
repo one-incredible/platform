@@ -3,6 +3,7 @@ const {
   createFetchRevision,
   createStoreRevision,
 } = require('./query');
+const { Type } = require('./field');
 
 function noop(value) {
   return value;
@@ -60,6 +61,16 @@ function createRelationStorageAdapter(ChildStorageAdapter, parent, child) {
 }
 
 function createRevisionedStorageAdapter(Model, tableName) {
+  const modelFields = Model.fields.filter(field => field.type === Type.MODEL);
+
+  function createComposedStorage(db) {
+    const composed = Object.create(null);
+    for (const field of modelFields) {
+      composed[field.name] = new field.StorageAdapter(db);
+    }
+    return composed;
+  }
+
   const Query = {
     fetchRevision: createFetchRevision(Model, tableName),
     storeRevision: createStoreRevision(Model, tableName),
@@ -69,6 +80,7 @@ function createRevisionedStorageAdapter(Model, tableName) {
   class RevisionedStorageAdapter extends Storage {
     constructor(db) {
       super(db);
+      this.composed = createComposedStorage(db);
       this.relations = Object.create(null);
     }
 
