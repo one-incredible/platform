@@ -63,6 +63,7 @@ describe('Video Storage', () => {
         fixtureVideo = Video.decode({
           id: uuidv4(),
           name: 'My Video',
+          image: [],
           stream: [],
         });
         await storage.store(fixtureVideo);
