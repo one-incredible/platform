@@ -61,6 +61,7 @@ function createRelationStorageAdapter(ChildStorageAdapter, parent, child) {
 }
 
 function createRevisionedStorageAdapter(Model, tableName) {
+  const listFields = Model.fields.filter(field => field.type === Type.LIST);
   const modelFields = Model.fields.filter(field => field.type === Type.MODEL);
 
   function createComposedStorage(db) {
@@ -69,6 +70,19 @@ function createRevisionedStorageAdapter(Model, tableName) {
       composed[name] = new StorageAdapter(db);
     }
     return composed;
+  }
+
+  function createRelationsStorage(db) {
+    const relations = Object.create(null);
+    for (const { name, StorageAdapter } of listFields) {
+      const RelationsStorageAdapter = createRelationStorageAdapter(
+        StorageAdapter,
+        tableName,
+        name
+      );
+      relations[name] = new RelationsStorageAdapter(db);
+    }
+    return relations;
   }
 
   const Query = {
@@ -81,7 +95,7 @@ function createRevisionedStorageAdapter(Model, tableName) {
     constructor(db) {
       super(db);
       this.composed = createComposedStorage(db);
-      this.relations = Object.create(null);
+      this.relations = createRelationsStorage(db);
     }
 
     async fetch(modelId, prepare = noop) {
@@ -92,12 +106,15 @@ function createRevisionedStorageAdapter(Model, tableName) {
 
       const model = result.rows[0];
 
-      await Promise.all(
-        modelFields.map(async ({ name, columnName }) => {
+      await Promise.all([
+        ...modelFields.map(async ({ name, columnName }) => {
           model[name] = await this.composed[name].fetch(model[columnName]);
           delete model[columnName];
-        })
-      );
+        }),
+        ...listFields.map(async ({ name }) => {
+          model[name] = await this.relations[name].fetch(model.id);
+        }),
+      ]);
 
       return prepare(model);
     }
