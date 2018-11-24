@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint '*/**/*.js'",
+    "start": "NODE_PATH=src node src/index.js",
     "test": "NODE_PATH=src jest"
   },
   "dependencies": {
