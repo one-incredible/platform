@@ -8,7 +8,7 @@ function noop(value) {
   return value;
 }
 
-function field(name, encode = noop, decode = noop) {
+function value(name, encode = noop, decode = noop) {
   return {
     type: Type.VALUE,
     name,
@@ -22,7 +22,7 @@ function field(name, encode = noop, decode = noop) {
   };
 }
 
-function listField(name, Model) {
+function list(name, Model) {
   return {
     type: Type.LIST,
     name,
@@ -31,7 +31,7 @@ function listField(name, Model) {
   };
 }
 
-function modelField(name, Model) {
+function model(name, Model) {
   return {
     type: Type.MODEL,
     name,
@@ -47,7 +47,7 @@ function modelField(name, Model) {
 
 module.exports = {
   Type,
-  field,
-  listField,
-  modelField,
+  value,
+  list,
+  model,
 };

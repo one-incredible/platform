@@ -1,5 +1,5 @@
 const { createModel } = require('../model');
-const { field } = require('../field');
+const { value } = require('../field');
 const {
   createFetchRevision,
   createStoreRevision,
@@ -9,10 +9,10 @@ const {
 
 describe('Query modules', () => {
   const Model = createModel([
-    field('id'),
-    field('name'),
-    field('length'),
-    field('rate'),
+    value('id'),
+    value('name'),
+    value('length'),
+    value('rate'),
   ]);
 
   describe('#createFetchRevision', () => {

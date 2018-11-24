@@ -1,11 +1,11 @@
 const { createModel } = require('../model');
-const { field, listField } = require('../field');
+const { value, list } = require('../field');
 const { Stream } = require('../stream/model');
 
 const Video = createModel([
-  field('id'),
-  field('name'),
-  listField('streams', Stream),
+  value('id'),
+  value('name'),
+  list('streams', Stream),
 ]);
 
 module.exports = {

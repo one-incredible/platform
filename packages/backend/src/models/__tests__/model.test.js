@@ -1,23 +1,23 @@
 const { createModel } = require('../model');
-const { field } = require('../field');
+const { value } = require('../field');
 const { float, int } = require('../transform');
 
 describe('Model modules', () => {
   describe('#createModel', () => {
-    const birthdate = field(
+    const birthdate = value(
       'birthdate',
       date => date.toISOString(),
       string => new Date(string)
     );
 
-    const Child = createModel([field('name'), birthdate]);
+    const Child = createModel([value('name'), birthdate]);
 
     const Parent = createModel([
-      field('name'),
-      field('salary', float(), float()),
-      field('bytes', int(10), int(10)),
+      value('name'),
+      value('salary', float(), float()),
+      value('bytes', int(10), int(10)),
       birthdate,
-      field('child', Child.encode, Child.decode),
+      value('child', Child.encode, Child.decode),
     ]);
 
     it('creates a Model', () => {
