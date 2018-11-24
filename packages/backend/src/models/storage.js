@@ -65,8 +65,8 @@ function createRevisionedStorageAdapter(Model, tableName) {
 
   function createComposedStorage(db) {
     const composed = Object.create(null);
-    for (const field of modelFields) {
-      composed[field.name] = new field.StorageAdapter(db);
+    for (const { name, StorageAdapter } of modelFields) {
+      composed[name] = new StorageAdapter(db);
     }
     return composed;
   }
@@ -94,6 +94,12 @@ function createRevisionedStorageAdapter(Model, tableName) {
     }
 
     async store(model) {
+      await Promise.all(
+        modelFields.map(({ name }) => {
+          return this.composed[name].store(model[name]);
+        })
+      );
+
       try {
         await this.db.query('BEGIN');
 
