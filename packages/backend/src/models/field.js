@@ -31,7 +31,7 @@ function list(name, Model) {
   };
 }
 
-function model(name, Model) {
+function model(name, Model, StorageAdapter) {
   return {
     type: Type.MODEL,
     name,
@@ -43,6 +43,8 @@ function model(name, Model) {
     columnValue(model) {
       return model[name].id;
     },
+
+    StorageAdapter,
   };
 }
 
