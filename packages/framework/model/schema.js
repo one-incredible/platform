@@ -94,15 +94,17 @@ function createSchema(Model) {
 
   for (const listField of listFields) {
     ensureNamed(listField.Model);
-    const relationTable = listField.Model.name;
+    const relationTable = listField.name;
     const listTable = `${mainTable}_${relationTable}`;
+    const parent = Model.name;
+    const child = listField.Model.name;
     statements.push(
       [
         `CREATE TABLE ${listTable} (`,
         [
-          `${mainTable}_id uuid NOT NULL REFERENCES ${mainTable} (id)`,
-          `${relationTable}_id uuid NOT NULL REFERENCES ${relationTable} (id)`,
-          `PRIMARY KEY (${mainTable}_id, ${relationTable}_id)`,
+          `${parent}_id uuid NOT NULL REFERENCES ${parent} (id)`,
+          `${child}_id uuid NOT NULL REFERENCES ${child} (id)`,
+          `PRIMARY KEY (${parent}_id, ${child}_id)`,
         ]
           .map(pad(2))
           .join(',\n'),

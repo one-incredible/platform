@@ -12,13 +12,13 @@ CREATE TABLE video (
   FOREIGN KEY (id, revision) REFERENCES video_revision (id, revision)
 );
 
-CREATE TABLE video_image (
+CREATE TABLE video_images (
   video_id uuid NOT NULL REFERENCES video (id),
   image_id uuid NOT NULL REFERENCES image (id),
   PRIMARY KEY (video_id, image_id)
 );
 
-CREATE TABLE video_stream (
+CREATE TABLE video_streams (
   video_id uuid NOT NULL REFERENCES video (id),
   stream_id uuid NOT NULL REFERENCES stream (id),
   PRIMARY KEY (video_id, stream_id)

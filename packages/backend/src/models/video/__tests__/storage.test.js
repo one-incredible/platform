@@ -63,8 +63,8 @@ describe('Video Storage', () => {
         fixtureVideo = Video.decode({
           id: uuidv4(),
           name: 'My Video',
-          image: [],
-          stream: [],
+          images: [],
+          streams: [],
         });
         await storage.store(fixtureVideo);
       });
@@ -76,11 +76,11 @@ describe('Video Storage', () => {
 
       describe('and streams attached', () => {
         beforeEach(async () => {
-          await storage.relations.stream.add(
+          await storage.relations.streams.add(
             fixtureVideo.id,
             fixtureStreams[0].id
           );
-          await storage.relations.stream.add(
+          await storage.relations.streams.add(
             fixtureVideo.id,
             fixtureStreams[2].id
           );
@@ -88,14 +88,14 @@ describe('Video Storage', () => {
 
         it('stream is avaiable on video', async () => {
           const returnedVideo = await storage.fetch(fixtureVideo.id);
-          expect(returnedVideo.stream.length).toEqual(2);
-          expect(returnedVideo.stream).toContainEqual(fixtureStreams[0]);
-          expect(returnedVideo.stream).toContainEqual(fixtureStreams[2]);
+          expect(returnedVideo.streams.length).toEqual(2);
+          expect(returnedVideo.streams).toContainEqual(fixtureStreams[0]);
+          expect(returnedVideo.streams).toContainEqual(fixtureStreams[2]);
         });
 
         describe('then stream detached', () => {
           beforeEach(async () => {
-            await storage.relations.stream.remove(
+            await storage.relations.streams.remove(
               fixtureVideo.id,
               fixtureStreams[0].id
             );
@@ -103,8 +103,8 @@ describe('Video Storage', () => {
 
           it('stream is removed from video', async () => {
             const returnedVideo = await storage.fetch(fixtureVideo.id);
-            expect(returnedVideo.stream.length).toEqual(1);
-            expect(returnedVideo.stream[0]).toEqual(fixtureStreams[2]);
+            expect(returnedVideo.streams.length).toEqual(1);
+            expect(returnedVideo.streams[0]).toEqual(fixtureStreams[2]);
           });
         });
       });
@@ -118,7 +118,7 @@ describe('Video Storage', () => {
       video = Video.decode({
         id: uuidv4(),
         name: 'My Video',
-        stream: [],
+        streams: [],
       });
       await storage.store(video);
     });
