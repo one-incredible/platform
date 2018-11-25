@@ -51,6 +51,9 @@ jobs:
           name: Run Database Migrations
           command: docker-compose run migration
       - run:
+          name: Lint Backend
+          command: docker-compose run backend yarn lint
+      - run:
           name: Test Backend
           command: docker-compose run -e CI=true backend yarn test --verbose
 
