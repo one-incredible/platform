@@ -9,7 +9,7 @@
     "test": "NODE_PATH=src jest"
   },
   "dependencies": {
-    "@oneinc/super-api": "^0.0.0"
+    "@oneinc/super-api": "^0.0.1"
   },
   "devDependencies": {
     "eslint": "^5.9.0",
