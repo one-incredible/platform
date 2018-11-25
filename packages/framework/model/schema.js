@@ -2,7 +2,6 @@ const { Type } = require('./field');
 
 function ensureNamed(Model) {
   if (!Model.name) {
-    console.error(Model);
     throw new Error(`Model not named`);
   }
 }

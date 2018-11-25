@@ -1,4 +1,4 @@
-const { createRevisionedStorageAdapter } = require('@oneinc/super-api/storage/storage');
+const { createRevisionedStorageAdapter } = require('@oneinc/super-api/storage');
 const { Image } = require('./model');
 
 const ImageStorage = createRevisionedStorageAdapter(Image, 'image');
