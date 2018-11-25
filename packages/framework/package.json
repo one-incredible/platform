@@ -1,15 +1,19 @@
 {
-  "name": "backend-api",
-  "version": "1.0.0",
+  "name": "@oneinc/super-api",
+  "version": "0.0.0",
+  "description": "Hyper-Opinionated Framwork for Building a REST APIs.",
   "main": "index.js",
+  "repository": "https://github.com/oneincredible/super-api",
+  "author": "Pontus Alexander <pontus.alexander@gmail.com>",
   "license": "MIT",
+  "private": false,
   "scripts": {
     "lint": "eslint '*/**/*.js'",
-    "start": "NODE_PATH=src node src/index.js",
-    "test": "NODE_PATH=src jest"
+    "test": "jest"
   },
   "dependencies": {
-    "@oneinc/super-api": "^0.0.0"
+    "express": "^4.16.4",
+    "pg": "^7.6.1"
   },
   "devDependencies": {
     "eslint": "^5.9.0",

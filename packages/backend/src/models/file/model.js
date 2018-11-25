@@ -1,12 +1,10 @@
-const { createModel } = require('../model');
-const { value } = require('../field');
-const { int } = require('../transform');
+const { createModel, Field } = require('@oneinc/super-api/model');
+const { int } = require('@oneinc/super-api/model/transform');
 
-const File = createModel([
-  value('path'),
-  value('mime'),
-  value('size', int(10)),
-], 'file');
+const File = createModel(
+  [Field.value('path'), Field.value('mime'), Field.value('size', int(10))],
+  'file'
+);
 
 module.exports = {
   File,

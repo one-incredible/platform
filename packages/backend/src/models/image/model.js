@@ -1,14 +1,16 @@
-const { createModel } = require('../model');
-const { model } = require('../field');
+const { createModel, Field } = require('@oneinc/super-api/model');
 const { File } = require('../file/model');
 const { FileStorage } = require('../file/storage');
 const { Resolution } = require('../resolution/model');
 const { ResolutionStorage } = require('../resolution/storage');
 
-const Image = createModel([
-  model('resolution', Resolution, ResolutionStorage),
-  model('file', File, FileStorage),
-], 'image');
+const Image = createModel(
+  [
+    Field.model('resolution', Resolution, ResolutionStorage),
+    Field.model('file', File, FileStorage),
+  ],
+  'image'
+);
 
 module.exports = {
   Image,

@@ -3,7 +3,7 @@ const {
   createFetchRevision,
   createStoreRevision,
 } = require('./query');
-const { Type } = require('./field');
+const { Type } = require('../model/field');
 
 function noop(value) {
   return value;
