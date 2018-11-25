@@ -1,7 +1,11 @@
-const { Type } = require('./models/field');
-const { noop } = require('./models/field');
-const { File } = require('./models/file/model');
-const { Stream } = require('./models/stream/model');
+const { Type } = require('./field');
+
+function ensureNamed(Model) {
+    if (!Model.name) {
+        console.error(Model);
+        throw new Error(`Model not named`);
+    }
+}
 
 function pad(size) {
     return function indent(string) {
@@ -35,6 +39,8 @@ function createValueColumn(field) {
 }
 
 function createReferenceColumn(field) {
+    ensureNamed(field.Model);
+
     const parts = [
         field.columnName,
         'uuid',
@@ -45,12 +51,16 @@ function createReferenceColumn(field) {
 }
 
 function createSchema(Model) {
+    ensureNamed(Model);
+
     const statements = [];
 
     const valueFields = Model.fields.filter(field => field.type === Type.VALUE);
-    valueFields.shift();
+    valueFields.shift(); // Bump off Id.
 
     const modelFields = Model.fields.filter(field => field.type === Type.MODEL);
+
+    const listFields = Model.fields.filter(field => field.type === Type.LIST);
 
     const mainTable = Model.name;
     const revisionTable = `${mainTable}_revision`;
@@ -81,8 +91,26 @@ function createSchema(Model) {
         ].join('\n')
     );
 
+    for (const listField of listFields) {
+        ensureNamed(listField.Model);
+        const relationTable = listField.Model.name;
+        const listTable = `${mainTable}_${relationTable}`;
+        statements.push(
+            [
+                `CREATE TABLE ${listTable} (`,
+                [
+                    `${mainTable}_id uuid NOT NULL REFERENCES ${mainTable} (id)`,
+                    `${relationTable}_id uuid NOT NULL REFERENCES ${relationTable} (id)`,
+                    `PRIMARY KEY (${mainTable}_id, ${relationTable}_id)`,
+                ].map(pad(2)).join(',\n'),
+                ');',
+            ].join('\n')
+        );
+    }
+
     return statements;
 }
 
-process.stdout.write(createSchema(File).join('\n') + '\n');
-process.stdout.write(createSchema(Stream).join('\n') + '\n');
+module.exports = {
+    createSchema,
+};

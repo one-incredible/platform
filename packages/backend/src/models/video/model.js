@@ -9,7 +9,7 @@ const Video = createModel([
   value('name'),
   list('image', Image, ImageStorage),
   list('stream', Stream, StreamStorage),
-]);
+], 'video');
 
 module.exports = {
   Video,

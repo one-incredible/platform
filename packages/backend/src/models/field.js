@@ -29,6 +29,7 @@ function list(name, Model, StorageAdapter) {
     encode: values => (values ? values.map(Model.encode) : null),
     decode: values => (values ? values.map(Model.decode) : null),
 
+    Model,
     StorageAdapter,
   };
 }
