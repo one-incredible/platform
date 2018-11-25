@@ -69,6 +69,7 @@ function createSchema(Model) {
         'revision integer NOT NULL',
         ...modelFields.map(createReferenceColumn),
         ...valueFields.map(createValueColumn),
+        'UNIQUE(id, revision)',
       ]
         .map(pad(2))
         .join(',\n'),

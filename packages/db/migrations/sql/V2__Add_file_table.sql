@@ -1,17 +1,15 @@
-CREATE TABLE file (
-    id uuid NOT NULL,
-    revision integer,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE file_revision (
-    id uuid,
-    revision integer,
-    path text NOT NULL,
-    mime varchar,
-    size integer,
-    PRIMARY KEY (id, revision)
+  id uuid NOT NULL,
+  revision integer NOT NULL,
+  path text,
+  mime text,
+  size integer,
+  UNIQUE(id, revision)
 );
 
-ALTER TABLE file
-    ADD FOREIGN KEY (id, revision) REFERENCES file_revision (id, revision);
+CREATE TABLE file (
+  id uuid NOT NULL,
+  revision integer NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id, revision) REFERENCES file_revision (id, revision)
+);
