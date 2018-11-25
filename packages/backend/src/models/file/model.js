@@ -6,7 +6,7 @@ const File = createModel([
   value('path'),
   value('mime'),
   value('size', int(10)),
-]);
+], 'file');
 
 module.exports = {
   File,

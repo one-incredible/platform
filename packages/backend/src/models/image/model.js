@@ -8,7 +8,7 @@ const { ResolutionStorage } = require('../resolution/storage');
 const Image = createModel([
   model('resolution', Resolution, ResolutionStorage),
   model('file', File, FileStorage),
-]);
+], 'image');
 
 module.exports = {
   Image,

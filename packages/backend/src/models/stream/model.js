@@ -8,7 +8,7 @@ const { ResolutionStorage } = require('../resolution/storage');
 const Stream = createModel([
   model('resolution', Resolution, ResolutionStorage),
   model('file', File, FileStorage),
-]);
+], 'stream');
 
 module.exports = {
   Stream,
