@@ -7,8 +7,8 @@ const { StreamStorage } = require('../stream/storage');
 const Video = createModel(
   [
     Field.value('name'),
-    Field.list('image', Image, ImageStorage),
-    Field.list('stream', Stream, StreamStorage),
+    Field.list('images', Image, ImageStorage),
+    Field.list('streams', Stream, StreamStorage),
   ],
   'video'
 );

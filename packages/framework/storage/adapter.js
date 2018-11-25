@@ -9,8 +9,10 @@ function noop(value) {
   return value;
 }
 
-function createRelationStorageAdapter(ChildStorageAdapter, parent, child) {
-  const tableName = `${parent}_${child}`;
+function createRelationStorageAdapter(ChildStorageAdapter, Model, field) {
+  const tableName = `${Model.name}_${field.name}`;
+  const parent = Model.name;
+  const child = field.Model.name;
 
   const Query = {
     fetch(parentId) {
@@ -74,13 +76,13 @@ function createRevisionedStorageAdapter(Model, tableName) {
 
   function createRelationsStorage(db) {
     const relations = Object.create(null);
-    for (const { name, StorageAdapter } of listFields) {
+    for (const field of listFields) {
       const RelationsStorageAdapter = createRelationStorageAdapter(
-        StorageAdapter,
-        tableName,
-        name
+        field.StorageAdapter,
+        Model,
+        field
       );
-      relations[name] = new RelationsStorageAdapter(db);
+      relations[field.name] = new RelationsStorageAdapter(db);
     }
     return relations;
   }

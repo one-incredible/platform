@@ -91,8 +91,8 @@ describe('Video API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
-            image: [],
-            stream: [],
+            images: [],
+            streams: [],
           })
           .end(done);
       });
@@ -123,8 +123,8 @@ describe('Video API', () => {
           .expect({
             id: video.id,
             name: 'Hello',
-            image: [],
-            stream: [],
+            images: [],
+            streams: [],
           })
           .end(done);
       });
@@ -136,7 +136,7 @@ describe('Video API', () => {
           streams = [await streamFactory.store(), await streamFactory.store()];
 
           request(app)
-            .put(`/api/video/${video.id}/stream/${streams[0].id}`)
+            .put(`/api/video/${video.id}/streams/${streams[0].id}`)
             .expect(201)
             .end(done);
         });
@@ -148,8 +148,8 @@ describe('Video API', () => {
             .expect({
               id: video.id,
               name: 'Hello',
-              image: [],
-              stream: [streams[0]],
+              images: [],
+              streams: [streams[0]],
             })
             .end(done);
         });
@@ -157,7 +157,7 @@ describe('Video API', () => {
         describe('then attaching another stream', () => {
           beforeEach(done => {
             request(app)
-              .put(`/api/video/${video.id}/stream/${streams[1].id}`)
+              .put(`/api/video/${video.id}/streams/${streams[1].id}`)
               .expect(201)
               .end(done);
           });
@@ -168,8 +168,8 @@ describe('Video API', () => {
               .expect(200)
               .expect(response => {
                 const video = response.body;
-                expect(video.stream).toContainEqual(streams[0]);
-                expect(video.stream).toContainEqual(streams[1]);
+                expect(video.streams).toContainEqual(streams[0]);
+                expect(video.streams).toContainEqual(streams[1]);
               })
               .end(done);
           });
@@ -178,7 +178,7 @@ describe('Video API', () => {
         describe('then deleting stream', () => {
           beforeEach(done => {
             request(app)
-              .delete(`/api/video/${video.id}/stream/${streams[0].id}`)
+              .delete(`/api/video/${video.id}/streams/${streams[0].id}`)
               .expect(200)
               .end(done);
           });
@@ -190,8 +190,8 @@ describe('Video API', () => {
               .expect({
                 id: video.id,
                 name: 'Hello',
-                image: [],
-                stream: [],
+                images: [],
+                streams: [],
               })
               .end(done);
           });
@@ -217,8 +217,8 @@ describe('Video API', () => {
             .expect({
               id: video.id,
               name: 'Good bye',
-              image: [],
-              stream: [],
+              images: [],
+              streams: [],
             })
             .end(done);
         });
