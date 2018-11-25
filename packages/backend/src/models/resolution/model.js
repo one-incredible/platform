@@ -3,7 +3,6 @@ const { value } = require('../field');
 const { int } = require('../transform');
 
 const Resolution = createModel([
-  value('id'),
   value('width', int(10)),
   value('height', int(10)),
 ]);

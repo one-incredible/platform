@@ -6,7 +6,6 @@ const { Stream } = require('../stream/model');
 const { StreamStorage } = require('../stream/storage');
 
 const Video = createModel([
-  value('id'),
   value('name'),
   list('image', Image, ImageStorage),
   list('stream', Stream, StreamStorage),

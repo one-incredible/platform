@@ -9,7 +9,6 @@ const {
 
 describe('Query modules', () => {
   const Model = createModel([
-    value('id'),
     value('name'),
     value('length'),
     value('rate'),
