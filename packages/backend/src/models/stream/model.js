@@ -1,5 +1,5 @@
-const { createModel } = require('../model');
-const { model } = require('../field');
+const { createModel } = require('@oneinc/super-api/model/model');
+const { model } = require('@oneinc/super-api/model/field');
 const { File } = require('../file/model');
 const { FileStorage } = require('../file/storage');
 const { Resolution } = require('../resolution/model');

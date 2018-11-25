@@ -1,5 +1,5 @@
-const { createModel } = require('../model');
-const { value, list } = require('../field');
+const { createModel } = require('@oneinc/super-api/model/model');
+const { value, list } = require('@oneinc/super-api/model/field');
 const { Image } = require('../image/model');
 const { ImageStorage } = require('../image/storage');
 const { Stream } = require('../stream/model');

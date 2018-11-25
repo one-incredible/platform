@@ -7,6 +7,10 @@
   "author": "Pontus Alexander <pontus.alexander@gmail.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint": "eslint '*/**/*.js'",
+    "test": "jest"
+  },
   "dependencies": {
     "express": "^4.16.4",
     "pg": "^7.6.1"

@@ -8,11 +8,7 @@ const {
 } = require('../query');
 
 describe('Query modules', () => {
-  const Model = createModel([
-    value('name'),
-    value('length'),
-    value('rate'),
-  ]);
+  const Model = createModel([value('name'), value('length'), value('rate')]);
 
   describe('#createFetchRevision', () => {
     it('creates a query builder based on model', () => {

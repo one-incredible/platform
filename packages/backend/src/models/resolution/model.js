@@ -1,6 +1,6 @@
-const { createModel } = require('../model');
-const { value } = require('../field');
-const { int } = require('../transform');
+const { createModel } = require('@oneinc/super-api/model/model');
+const { value } = require('@oneinc/super-api/model/field');
+const { int } = require('@oneinc/super-api/model/transform');
 
 const Resolution = createModel([
   value('width', int(10)),
