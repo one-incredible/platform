@@ -10,7 +10,7 @@ function noop(value) {
 }
 
 function createRelationStorageAdapter(ChildStorageAdapter, parent, child) {
-  const tableName = `${parent}_${child}s`;
+  const tableName = `${parent}_${child}`;
 
   const Query = {
     fetch(parentId) {
