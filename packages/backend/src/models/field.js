@@ -46,6 +46,7 @@ function model(name, Model, StorageAdapter) {
       return model[name].id;
     },
 
+    Model,
     StorageAdapter,
   };
 }

@@ -1,6 +1,7 @@
 const { Type } = require('./models/field');
 const { noop } = require('./models/field');
 const { File } = require('./models/file/model');
+const { Stream } = require('./models/stream/model');
 
 function pad(size) {
     return function indent(string) {
@@ -24,10 +25,20 @@ function decideType(field) {
     return 'text';
 }
 
-function createColumn(field) {
+function createValueColumn(field) {
     const parts = [
-        field.name,
+        field.columnName,
         decideType(field),
+    ];
+
+    return parts.join(' ');
+}
+
+function createReferenceColumn(field) {
+    const parts = [
+        field.columnName,
+        'uuid',
+        `REFERENCES ${field.Model.name} (id)`,
     ];
 
     return parts.join(' ');
@@ -39,6 +50,8 @@ function createSchema(Model) {
     const valueFields = Model.fields.filter(field => field.type === Type.VALUE);
     valueFields.shift();
 
+    const modelFields = Model.fields.filter(field => field.type === Type.MODEL);
+
     const mainTable = Model.name;
     const revisionTable = `${mainTable}_revision`;
 
@@ -48,7 +61,8 @@ function createSchema(Model) {
             [
                 'id uuid NOT NULL',
                 'revision integer NOT NULL',
-                ...valueFields.map(createColumn),
+                ...modelFields.map(createReferenceColumn),
+                ...valueFields.map(createValueColumn),
             ].map(pad(2)).join(',\n'),
             ');',
         ].join('\n')
@@ -70,6 +84,5 @@ function createSchema(Model) {
     return statements;
 }
 
-const statements = createSchema(File);
-
-process.stdout.write(statements.join('\n'));
+process.stdout.write(createSchema(File).join('\n') + '\n');
+process.stdout.write(createSchema(Stream).join('\n') + '\n');
