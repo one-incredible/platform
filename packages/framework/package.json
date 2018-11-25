@@ -7,6 +7,9 @@
   "author": "Pontus Alexander <pontus.alexander@gmail.com>",
   "license": "MIT",
   "private": false,
+  "bin": {
+    "super-api-generate-schema": "./bin/create-schema.js"
+  },
   "scripts": {
     "lint": "eslint '*/**/*.js'",
     "test": "jest"
