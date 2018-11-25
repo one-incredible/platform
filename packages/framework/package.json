@@ -1,6 +1,6 @@
 {
   "name": "@oneinc/super-api",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Hyper-Opinionated Framwork for Building a REST APIs.",
   "main": "index.js",
   "repository": "https://github.com/oneincredible/super-api",
