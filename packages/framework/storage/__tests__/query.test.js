@@ -1,5 +1,5 @@
-const { createModel } = require('../model');
-const { value } = require('../field');
+const { createModel } = require('../../model/model');
+const { value } = require('../../model/field');
 const {
   createFetchRevision,
   createStoreRevision,
