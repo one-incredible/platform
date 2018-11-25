@@ -14,6 +14,24 @@ jobs:
           working_directory: packages/client-web
           command: yarn run lint
 
+  test-framework:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Install Framework
+          working_directory: packages/framework
+          command: yarn install
+      - run:
+          name: Lint Framework
+          working_directory: packages/framework
+          command: yarn run lint
+      - run:
+          name: Test Framework
+          working_directory: packages/framework
+          command: yarn run test --verbose
+
   test-backend:
     docker:
       - image: circleci/node:8
@@ -42,3 +60,4 @@ workflows:
     jobs:
       - test-client-web
       - test-backend
+      - test-framework
