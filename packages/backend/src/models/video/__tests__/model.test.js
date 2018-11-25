@@ -9,7 +9,12 @@ describe('Video Model', () => {
         image: [],
         stream: [],
       });
-      expect(model).toEqual({ id: 'any-string', name: 'A name', stream: [], image: [] });
+      expect(model).toEqual({
+        id: 'any-string',
+        name: 'A name',
+        stream: [],
+        image: [],
+      });
     });
   });
 

@@ -1,3 +1,5 @@
+const { value } = require('./field');
+
 function createSerializer(fields) {
   return function encode(model) {
     const payload = {};
@@ -18,7 +20,9 @@ function createDeserializer(fields) {
   };
 }
 
-function createModel(fields) {
+function createModel(fieldSpec) {
+  const fields = [value('id'), ...fieldSpec];
+
   const encode = createSerializer(fields);
   const decode = createDeserializer(fields);
 
