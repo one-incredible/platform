@@ -129,11 +129,8 @@ function createRevisionedStorageAdapter(Model, tableName) {
       try {
         await this.db.query('BEGIN');
 
-        const result = await this.db.query(Query.storeRevision(model));
-
-        const { revision } = result.rows[0];
-
-        await this.db.query(Query.promoteRevision(model, revision));
+        await this.db.query(Query.storeRevision(model));
+        await this.db.query(Query.promoteRevision(model));
 
         await this.db.query('COMMIT');
       } catch (error) {

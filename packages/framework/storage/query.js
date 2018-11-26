@@ -46,13 +46,16 @@ function createStoreRevision(Model, name) {
 }
 
 function createPromoteRevision(name) {
-  const insert = `INSERT INTO ${name} (id, revision) VALUES($1, $2)`;
-  const update = `UPDATE ${name} SET revision = $2 WHERE id = $1`;
+  const text = [
+    `INSERT INTO ${name} (id, revision)`,
+    `SELECT id, MAX(revision) FROM ${name}_revision WHERE id = $1 GROUP BY id`,
+    'ON CONFLICT (id) DO UPDATE SET revision = excluded.revision',
+  ].join(' ');
 
-  return function createQuery(model, revisionNo) {
+  return function createQuery(model) {
     return {
-      text: revisionNo === 1 ? insert : update,
-      values: [model.id, revisionNo],
+      text,
+      values: [model.id],
     };
   };
 }

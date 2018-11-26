@@ -53,20 +53,13 @@ describe('Query modules', () => {
         rate: 12,
       });
 
-      let query;
       const createQuery = createPromoteRevision('video');
 
-      query = createQuery(model, 1);
+      const query = createQuery(model);
       expect(query.text).toEqual(
-        'INSERT INTO video (id, revision) VALUES($1, $2)'
+        'INSERT INTO video (id, revision) SELECT id, MAX(revision) FROM video_revision WHERE id = $1 GROUP BY id ON CONFLICT (id) DO UPDATE SET revision = excluded.revision'
       );
-      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 1]);
-
-      query = createQuery(model, 2);
-      expect(query.text).toEqual(
-        'UPDATE video SET revision = $2 WHERE id = $1'
-      );
-      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001', 2]);
+      expect(query.values).toEqual(['01837ed6-ee3e-11e8-b6f6-00090ffe0001']);
     });
   });
 
