@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@oneinc/super-api@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@oneinc/super-api/-/super-api-0.0.1.tgz#3b1b27ca2c6b5fe3ba1e8761121b59a55247cafa"
-  integrity sha512-6M7hMU0OYZxFBcDFgOEQvKzTt8xU8oPj7DAxPiFT8pqfF237IsFqpfzCikB07anIWFPVnzJgIgVFPDBEJfrOMQ==
+"@oneinc/super-api@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@oneinc/super-api/-/super-api-0.0.2.tgz#c246ed171fd92ab6485c23ad5cd8598b0a697427"
+  integrity sha512-qkcR6yRDOpiIgIY/gBnIYdJlsK5zV/RnEMMZX5FAkHXAWW51xxM/7RKPyjtvyu/F6IRcyAk3zr0kA7hiO5CNIw==
   dependencies:
     express "^4.16.4"
     pg "^7.6.1"
